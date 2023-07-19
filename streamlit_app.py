@@ -6,6 +6,24 @@ import random
 
 
 
+style = """
+    <style>
+        .image-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .image-container img {
+            max-width: 60%;
+            max-height: 50%;
+            border-radius: 10px;
+            /box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);/
+            position: relative;
+            bottom: 5em;
+        }
+    </style>
+"""
 
 
 text = """
@@ -18,8 +36,9 @@ Les modèles de ce projet ont été construits sur les données de la ville de T
 
 
 """
+st.markdown(style, unsafe_allow_html=True)
 
-chemin_image = "F:\diabete\diabeteForecast\images\dia1.png"
+chemin_image = "https://github.com/Moubarak321/DiabetForecast/blob/main/images/dia1.png?raw=true"
 # def get_random_img(img_names: list[str]) -> str:
 #     return random.choice(img_names)
 

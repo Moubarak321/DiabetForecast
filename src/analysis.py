@@ -12,6 +12,11 @@ from src.func.analys_func import importation_of_dataset, diabetics, scatter, his
 # Cholesterol
 st.set_option('deprecation.showPyplotGlobalUse', False)
 def data_viz():
+    with open('style.css') as f:
+       
+        st.sidebar.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
+    # st.sidebar.markdown(f'<div class="image-container"><img src="https://github.com/Moubarak321/DiabetForecast/blob/main/images/dia1.png?raw=true" alt="Ma superbe image"></div>', unsafe_allow_html=True)
+
     st.sidebar.header("Paramètres de visualisation de données")
     # viz_type = st.sidebar.selectbox("Type de visualisation", ('Variables générales', 'Paramètres'))
    
