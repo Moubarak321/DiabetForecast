@@ -1,5 +1,6 @@
 import streamlit as st 
 from streamlit_option_menu import option_menu
+# from streamlit import option_menu
 from src import analysis 
 import random
 
@@ -18,7 +19,7 @@ Les modèles de ce projet ont été construits sur les données de la ville de T
 
 """
 
-
+chemin_image = "F:\diabete\diabeteForecast\images\dia1.png"
 # def get_random_img(img_names: list[str]) -> str:
 #     return random.choice(img_names)
 
@@ -35,6 +36,9 @@ def accueil():
     # with st.expander("Description du Projet DiabetForecast"):
     #     st.write()
     # st.image("https://static.streamlit.io/examples/dice.jpg")
+
+st.markdown(f'<div class="image-container"><img src="{chemin_image}" alt="Ma superbe image"></div>', unsafe_allow_html=True)
+
 
 menu = option_menu(None, ["Accueil", "Analyses", "Prévisions" ] ,
                 icons=['house', 'bar-chart-fill',  'gear'], 
