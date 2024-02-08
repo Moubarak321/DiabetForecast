@@ -64,7 +64,7 @@ def show_protected_content():
         if deconnexion:
             st.session_state.logged_in = False
             st.session_state.last_login_time = None
-            st.experimental_rerun()
+            st.rerun()
 
         path = "diabetes_prediction_dataset.csv"
         data = importation_of_dataset(path)
@@ -472,7 +472,7 @@ def login(email, password):
             # Définir la session comme connectée
             st.session_state.logged_in = True
             show_protected_content()
-            st.experimental_rerun()
+            st.rerun()
 
 
 
@@ -491,7 +491,7 @@ def register(email, password):
         # Définir la session comme connectée
         st.session_state.logged_in = True
         show_protected_content()
-        st.experimental_rerun()
+        st.rerun()
 
 def data_viz():
     with open('style.css') as f:
@@ -502,9 +502,10 @@ def data_viz():
         # Vérifier si l'utilisateur est connecté avant d'afficher le formulaire de connexion
     if not ("logged_in" in st.session_state and st.session_state.logged_in):
         # Afficher le formulaire de connexion
+        st.info("👈Authentifiez vous pour accéder aux données")
         menu = st.sidebar.selectbox("Authentifiez-vous", ["Connexion", "Inscription"])
-        email = st.sidebar.text_input("Your email adress")
-        password = st.sidebar.text_input("Your password")
+        email = st.sidebar.text_input("Your email adress", placeholder="Email")
+        password = st.sidebar.text_input("Your password",placeholder="Mot de passe",type="password")
         
         if menu == "Inscription":
             register(email, password)
