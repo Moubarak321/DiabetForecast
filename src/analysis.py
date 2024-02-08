@@ -59,6 +59,12 @@ def show_protected_content():
                 "**Distribution des diabétiques selon le genre**",
                 ("", "Hommes", "Femmes", "Similitudes"),
             )
+        
+        deconnexion = st.sidebar.button("Déconnexion")
+        if deconnexion:
+            st.session_state.logged_in = False
+            st.session_state.last_login_time = None
+            st.experimental_rerun()
 
         path = "diabetes_prediction_dataset.csv"
         data = importation_of_dataset(path)
@@ -466,6 +472,8 @@ def login(email, password):
             # Définir la session comme connectée
             st.session_state.logged_in = True
             show_protected_content()
+            st.experimental_rerun()
+
 
 
 def register(email, password):
@@ -483,6 +491,7 @@ def register(email, password):
         # Définir la session comme connectée
         st.session_state.logged_in = True
         show_protected_content()
+        st.experimental_rerun()
 
 def data_viz():
     with open('style.css') as f:

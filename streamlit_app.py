@@ -60,7 +60,7 @@ st.markdown(f'<div class="image-container"><img src="{chemin_image}" alt="Ma sup
 
 
 menu = option_menu(None, ["Accueil", "Analyses", "Prévisions" ] ,
-                icons=['house', 'bar-chart-fill',  'gear'], 
+                icons=['house', 'bar-chart-fill',  'lightbulb'], 
                 menu_icon="cast", default_index=0, orientation="horizontal")
 
 if menu == "Accueil":
