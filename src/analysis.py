@@ -37,9 +37,7 @@ storage = firebase.storage()
 # Cholesterol
 st.set_option('deprecation.showPyplotGlobalUse', False)
 
-def login_page():
-    # Ajoutez ici le code de votre page de connexion
-    st.write("Page de connexion")
+
 
 def show_protected_content():
         st.sidebar.header("Paramètres de visualisation de données")
@@ -465,6 +463,8 @@ def login(email, password):
 
             print(username)
             st.title("Welcome " + username)
+            # Définir la session comme connectée
+            st.session_state.logged_in = True
             show_protected_content()
 
 
@@ -480,6 +480,8 @@ def register(email, password):
         db.child(user['localId']).child("Username").set(username)
         db.child(user['localId']).child("ID").set(user['localId'])
         st.title("Welcome "+ username)
+        # Définir la session comme connectée
+        st.session_state.logged_in = True
         show_protected_content()
 
 def data_viz():
@@ -487,21 +489,24 @@ def data_viz():
        
         st.sidebar.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
     # st.sidebar.markdown(f'<div class="image-container"><img src="https://github.com/Moubarak321/DiabetForecast/blob/main/images/dia1.png?raw=true" alt="Ma superbe image"></div>', unsafe_allow_html=True)
+       
+        # Vérifier si l'utilisateur est connecté avant d'afficher le formulaire de connexion
+    if not ("logged_in" in st.session_state and st.session_state.logged_in):
+        # Afficher le formulaire de connexion
         menu = st.sidebar.selectbox("Authentifiez-vous", ["Connexion", "Inscription"])
         email = st.sidebar.text_input("Your email adress")
         password = st.sidebar.text_input("Your password")
         
         if menu == "Inscription":
             register(email, password)
-           
+
         elif menu == "Connexion":
             login(email, password)
-           
 
-        # Vérifier si l'utilisateur est connecté avant d'afficher le contenu protégé
-        if "logged_in" in st.session_state and st.session_state.logged_in:
-            show_protected_content()
-            st.empty()
+    # Vérifier si l'utilisateur est connecté avant d'afficher le contenu protégé
+    if "logged_in" in st.session_state and st.session_state.logged_in:
+        st.empty()
+        show_protected_content()
    
 
 
