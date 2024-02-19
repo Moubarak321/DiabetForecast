@@ -42,3 +42,56 @@ def densite(data, col):
     # plt.xlabels("Ages")
     # plt.title("Distribution des diabétiques en fonction de la variable {}".format(col))
 
+
+
+
+
+
+
+
+
+# =======================================================================
+    # New Version
+# =======================================================================
+
+# ::::::::::::: Relation between Diabet with major feature :::::::::::::
+
+# def visualize_feature(feature_name, df):
+#   fig, axes = plt.subplots(3,1, figsize=(6,18))
+
+#   # Pie chart
+#   df[feature_name].value_counts().plot(kind="pie", autopct='%.02f',ax=axes[0])
+#   axes[0].set_title(f'Pie Chart: {feature_name}')
+
+#   # Crosstab heatmap
+#   cross_tab = pd.crosstab(df[feature_name], df['Diabetes_binary'], normalize='index')
+#   sns.heatmap(cross_tab, annot=True, cmap='YlGnBu', fmt='0.2%', cbar=False, ax=axes[1])
+#   axes[1].set_title(f'Cross-Tabulation: {feature_name} vs Diabetes_binary (%)')
+
+#   # Crosstab Barplot
+#   cross_tab.plot(kind="bar", ax=axes[2])
+#   axes[2].set_title(f"Bar plot: {feature_name} Vs Diabetes_binary")
+
+#   plt.tight_layout()
+#   plt.show()
+
+
+
+# def visualize_feature(feature_name, df):
+#     fig, axes = plt.subplots(3,1, figsize=(6.18))
+
+#     # Pie chart
+#     df[feature_name].value_counts().plot(kind="pie", autopct='%.02f', ax=axes[0])
+#     axes[0].set_title(f'Pie Chart: {feature_name}')
+
+#     # CrossTab heatmap
+#     cross_tab = pd.crosstab(df[feature_name],df['Diabetes_binary'], normalize='index')
+#     sns.heatmap(cross_tab,annot=True, cmap="YlGnBu", fmt="0.2%", cbar=False, ax=axes[1])
+#     axes[1].set_title(f"Cross-Tabulation:{feature_name} vs Diabetes")
+
+#     # CrossTba Barplot
+#     cross_tab.plot(kind="bar", ax=axes[2])
+#     axes[2].set_title(f"Bar Plot: {feature_name} Vs Diabete")
+
+#     plt.tight_layout()
+#     plt.show()

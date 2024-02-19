@@ -48,6 +48,12 @@ def show_protected_content():
         )
         st.write("", values)
 
+        champs0 = st.sidebar.multiselect(
+            "Voir les analogies",
+            ["Vue d'ensemble","Age" ,"IMC", "Glucose", "Hypertension", "Cardio"],
+            ["Vue d'ensemble"],
+        )
+
         champs1 = st.sidebar.multiselect(
             "Selectionnez un/des indicateurs",
             ["Age", "IMC", "Glucose", "Hypertension", "Cardio"],
