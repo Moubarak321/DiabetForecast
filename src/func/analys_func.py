@@ -95,3 +95,18 @@ def densite(data, col):
 
 #     plt.tight_layout()
 #     plt.show()
+
+
+
+#  correlation
+# def visualize_corr(df):
+#     import matplotlib.pyplot as plt
+
+#     (df.drop('Diabetes_binary', axis=1)
+#    .corrwith(df.Diabetes_binary)
+#    .sort_values(ascending=False)
+#    .plot(kind='bar', figsize=(10, 4), title="Diabetes_binary Correlation", alpha=0.8, zorder=3)
+#    .spines[['top','right', 'left']].set_visible(False)
+#    )
+#     plt.grid(axis='y', linestyle='--', alpha=.5)
+#     plt.xticks(rotation = 45, ha='right', size=15)
