@@ -56,29 +56,61 @@ def importation_of_dataset(path):
 
 # ::::::::::::: Relation between Diabet with major feature :::::::::::::
 
+# def visualize_single_correlation(feature_name, df, img_name):
+#     import seaborn as sns
+#     import matplotlib.pyplot as plt
+#     import pandas as pd
+    
+#     fig, axes = plt.subplots(2,2, figsize=(12,7))
+
+#     sns.kdeplot(df , x= df[feature_name],hue=df["Diabetes_binary"] ,multiple='stack' ,ax=axes[0])
+#     axes[0].set_title(f'Cross-Tabulation: {feature_name} vs Diabetes_binary (%)')
+
+    
+
+#     # Crosstab heatmap
+#     cross_tab = pd.crosstab(df[feature_name], df['Diabetes_binary'], normalize='index')
+#     sns.heatmap(cross_tab, annot=True, cmap='YlGnBu', fmt='0.2%', cbar=False, ax=axes[1])
+#     axes[1].set_title(f'Cross-Tabulation: {feature_name} vs Diabetes_binary (%)')
+
+#     # Crosstab Barplot
+#     cross_tab.plot(kind="bar", ax=axes[2])
+#     axes[2].set_title(f"Bar plot: {feature_name} Vs Diabetes_binary")
+
+#     plt.tight_layout()
+#     plt.savefig(f"src/viz_img/{img_name}")
+#     # st.image(img_name)
+
+#     plt.show()
+
 def visualize_single_correlation(feature_name, df, img_name):
     import seaborn as sns
     import matplotlib.pyplot as plt
     import pandas as pd
     
-    fig, axes = plt.subplots(1,2, figsize=(12,7))
+    fig, axes = plt.subplots(2, 2, figsize=(15, 12))
 
-    
-
-    # Crosstab heatmap
-    cross_tab = pd.crosstab(df[feature_name], df['Diabetes_binary'], normalize='index')
-    sns.heatmap(cross_tab, annot=True, cmap='YlGnBu', fmt='0.2%', cbar=False, ax=axes[0])
-    axes[0].set_title(f'Cross-Tabulation: {feature_name} vs Diabetes_binary (%)')
+    # KDE Plot
+    sns.kdeplot(data=df, x=feature_name, hue="Diabetes_binary", multiple='stack', ax=axes[0, 0])
+    axes[0, 0].set_title(f'KDE Plot: {feature_name} vs Diabetes_binary',fontsize=20)
 
     # Crosstab Barplot
-    cross_tab.plot(kind="bar", ax=axes[1])
-    axes[1].set_title(f"Bar plot: {feature_name} Vs Diabetes_binary")
+    cross_tab = pd.crosstab(df[feature_name], df['Diabetes_binary'], normalize='index')
+    cross_tab.plot(kind="bar", ax=axes[0, 1])
+    axes[0, 1].set_title(f"Bar plot: {feature_name} Vs Diabetes_binary",fontsize=20)
+    
+    # Crosstab heatmap
+    sns.heatmap(cross_tab, annot=True, cmap='YlGnBu', fmt='0.2%', cbar=False, ax=axes[1, 0])
+    axes[1, 0].set_title(f'Cross-Tabulation: {feature_name} vs Diabetes_binary (%)',fontsize=20)
+
+    # Supprimez la sous-trace inutilisée
+    fig.delaxes(axes[1, 1])
 
     plt.tight_layout()
     plt.savefig(f"src/viz_img/{img_name}")
-    # st.image(img_name)
-
     plt.show()
+
+
 
 
 
@@ -134,7 +166,7 @@ def histplot(df,feature, img_name):
     import matplotlib.pyplot as plt 
     
     plt.figure(figsize = (10,6))
-    sns.histplot(df , x= df[feature],hue=df["Diabetes_binary"] ,multiple='stack' , bins=20)
+    sns.kdeplot(df , x= df[feature],hue=df["Diabetes_binary"] ,multiple='stack' )
     # sns.scatterplot(df[feature])
     plt.tight_layout()
 
