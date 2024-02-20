@@ -4,8 +4,8 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import time
 import pyrebase
-from src.func.analys_func import importation_of_dataset, diabetics, scatter, histplot, densite
-
+from src.func.analys_func import importation_of_dataset, visualize_corr,visualize_single_correlation,histplot
+#  diabetics, scatter, histplot, densite,
 
 
 
@@ -40,428 +40,465 @@ st.set_option('deprecation.showPyplotGlobalUse', False)
 
 
 def show_protected_content():
-        st.sidebar.header("Paramètres de visualisation de données")
-        # viz_type = st.sidebar.selectbox("Type de visualisation", ('Variables générales', 'Paramètres'))
+            st.sidebar.header("Paramètres de visualisation de données")
+            # viz_type = st.sidebar.selectbox("Type de visualisation", ('Variables générales', 'Paramètres'))
 
-        values = st.slider(
-            "**Selectionnez une plage d'age pour la visualisation**", 1, 80, (1, 80)
-        )
-        st.write("", values)
+            values = st.slider("Sélectionnez la tranche d'âge :", min_value=1, max_value=13, value=(1, 13))
+            st.write("", values)
 
-        champs0 = st.sidebar.multiselect(
-            "Voir les analogies",
-            ["Vue d'ensemble","Age" ,"IMC", "Glucose", "Hypertension", "Cardio"],
-            ["Vue d'ensemble"],
-        )
+            champs0 = st.sidebar.multiselect(
+                "Voir les analogies",
+                ["Vue d'ensemble","Pression artérielle(HighBP)" ,"Cholestérol(HighChol)", 
+                 "IMC", "Alcolémie", "Propension à la cigarette","AVC","Infactus","Etat de santé",
+                 "Santé mentale", "Fréquence de consultation", "Santé mentale","Activité physique",
+                 "Alimentation en fruits","Alimentation en légumes","Age","Sexe"],
 
-        champs1 = st.sidebar.multiselect(
-            "Selectionnez un/des indicateurs",
-            ["Age", "IMC", "Glucose", "Hypertension", "Cardio"],
-            ["Age"],
-        )
-
-        with st.sidebar.expander("**Paramètres avancés**"):
-            genre = st.radio(
-                "**Distribution des diabétiques selon le genre**",
-                ("", "Hommes", "Femmes", "Similitudes"),
+                ["Vue d'ensemble"],
             )
-        
-        deconnexion = st.sidebar.button("Déconnexion")
-        if deconnexion:
-            st.session_state.logged_in = False
-            st.session_state.last_login_time = None
-            st.rerun()
 
-        path = "diabetes_prediction_dataset.csv"
-        data = importation_of_dataset(path)
-        # st.write(data)
+            champs1 = st.sidebar.multiselect(
+                "Selectionnez un/des indicateurs",
+                ["Age", "IMC", "Glucose", "Hypertension", "Cardio"],
+                ["Age"],
+            )
 
-        Diabetics = diabetics(data)
-
-        mens = Diabetics.loc[Diabetics["gender"] == "Male"]
-        female = Diabetics.loc[Diabetics["gender"] == "Female"]
-
-        # ================ Selectionnez un/des indicateurs ================
-        if values:
-            splited_data = Diabetics.loc[
-                (Diabetics["age"] >= values[0]) & (Diabetics["age"] <= values[1])
-            ]
-            if "Age" in champs1:
-                st.subheader("**Distribution des diabétiques selon l'âge**")
-                c1, c2, c3 = st.columns((2, 2, 2))
-
-                with st.container():
-                    with c1:
-                        st.write("**Nuage de point**")
-                        st.pyplot(scatter(data=splited_data, col="age"))
-                    with c2:
-                        st.write("**Diagramme en bande**")
-                        st.pyplot(histplot(data=splited_data, col="age"))
-                    with c3:
-                        st.write("**Histogramme**")
-                        st.pyplot(densite(data=splited_data, col="age"))
-
-            if "IMC" in champs1:
-                st.subheader(
-                    "**Distribution des diabétiques selon l'indice de masse corporelle.**"
+            with st.sidebar.expander("**Paramètres avancés**"):
+                genre = st.radio(
+                    "**Distribution des diabétiques selon le genre**",
+                    ("", "Hommes", "Femmes", "Similitudes"),
                 )
-                c1, c2, c3 = st.columns((2, 2, 2))
+            
+            deconnexion = st.sidebar.button("Déconnexion")
+            if deconnexion:
+                st.session_state.logged_in = False
+                st.session_state.last_login_time = None
+                st.rerun()
 
-                with st.container():
-                    with c1:
-                        st.write("**Nuage de point**")
-                        st.pyplot(scatter(data=Diabetics, col="bmi"))
-                    with c2:
-                        st.write("**Diagramme en bande**")
-                        st.pyplot(histplot(data=Diabetics, col="bmi"))
-                    with c3:
-                        st.write("**Histogramme**")
-                        st.pyplot(densite(data=Diabetics, col="bmi"))
+            # path = "diabetes_prediction_dataset.csv"
+            path = "new_diabetes_binary.csv"
+            data = importation_of_dataset(path)
+            # st.write(data)
 
-            if "Glucose" in champs1:
-                st.subheader("**Distribution des diabétiques selon leur taux de glucose**")
-                c1, c2, c3 = st.columns((2, 2, 2))
+            # Diabetics = diabetics(data)
 
-                with st.container():
-                    with c1:
-                        st.write("**Nuage de point**")
-                        st.pyplot(scatter(data=Diabetics, col="blood_glucose_level"))
-                    with c2:
-                        st.write("**Diagramme en bande**")
-                        st.pyplot(histplot(data=Diabetics, col="blood_glucose_level"))
-                    with c3:
-                        st.write("**Histogramme**")
-                        st.pyplot(densite(data=Diabetics, col="blood_glucose_level"))
+            # mens = Diabetics.loc[Diabetics["gender"] == "Male"]
+            # female = Diabetics.loc[Diabetics["gender"] == "Female"]
 
-            if "Hypertension" in champs1:
-                st.subheader(
-                    "**Distribution des diabétiques selon qu'ils soient hypertendus**"
-                )
-                c1, c2, c3 = st.columns((2, 2, 2))
-
-                with st.container():
-                    with c1:
-                        st.write("**Nuage de point**")
-                        st.pyplot(scatter(data=Diabetics, col="hypertension"))
-                    with c2:
-                        st.write("**Diagramme en bande**")
-                        st.pyplot(histplot(data=Diabetics, col="hypertension"))
-                    with c3:
-                        st.write("**Histogramme**")
-                        st.pyplot(densite(data=Diabetics, col="hypertension"))
-
-            if "Cardio" in champs1:
-                st.subheader(
-                    "**Distribution des diabétiques qu'ils soient atteints de maladies cardiaques**"
-                )
-                c1, c2, c3 = st.columns((2, 2, 2))
-
-                with st.container():
-                    with c1:
-                        st.write("**Nuage de point**")
-                        st.pyplot(scatter(data=Diabetics, col="heart_disease"))
-                    with c2:
-                        st.write("**Diagramme en bande**")
-                        st.pyplot(histplot(data=Diabetics, col="heart_disease"))
-                    with c3:
-                        st.write("**Histogramme**")
-                        st.pyplot(densite(data=Diabetics, col="heart_disease"))
-
-            # =========================== Distribution de l'homme ===========================
-
-            if genre == "Hommes":
-                st.subheader("**Rapports de genre dans la distribution des diabétiques**")
-                # st.markdown('**This is a string that explains something above.**')
-
-                champs3 = st.multiselect(
-                    "Selectionnez un/des paramètres",
-                    ["IMC", "Age", "Glucose", "Hypertension", "Cardio"],
-                    ["IMC"],
-                )
-                splited_men = mens.loc[
-                    (mens["age"] >= values[0]) & (mens["age"] <= values[1])
+            # ================ Selectionnez un/des indicateurs ================
+            if values:
+                splited_data = data.loc[
+                    (data["Age"] >= values[0]) & (data["Age"] <= values[1])
                 ]
+                if "Vue d'ensemble" in champs0:
+                    st.subheader("**Corrélation entre tous les paramètres**")
+                    # c1, c2, c3 = st.columns((2, 2, 2))
 
-                st.subheader("**Hommes**")
-                if "Age" in champs3:
                     with st.container():
-                        st.markdown(
-                            "**Distribution des hommes diabétiques selon leur age**"
-                        )
+                        
+                        st.write("**Nuage de point**")
+                        st.pyplot(visualize_corr(splited_data))
+                        # with c2:
+                        #     st.write("**Diagramme en bande**")
+                        #     st.pyplot(visualize_corr(data=data,))
+                        # with c3:
+                        #     st.write("**Histogramme**")
+                        #     st.pyplot(visualize_corr(data=data, ))
+                if "Pression artérielle(HighBP)" in champs0:
+                    st.subheader("**Corrélation entre le diabète et la pression artérielle**")
+                    # c1, c2, c3 = st.columns((2, 2, 2))
 
-                        c1, c2, c3 = st.columns((2, 2, 2))
-                        with c1:
-                            st.write("**Nuage de point**")
-                            st.pyplot(scatter(data=splited_men, col="age"))
-                        with c2:
-                            st.write("**Diagramme en bande**")
-                            st.pyplot(histplot(data=splited_men, col="age"))
-                        with c3:
-                            st.write("**Histogramme**")
-                            st.pyplot(densite(data=splited_men, col="age"))
-
-                if "IMC" in champs3:
                     with st.container():
-                        st.markdown("**Distribution des hommes selon leur IMC**")
+                        
+                        st.write("**Nuage de point**")
+                        st.pyplot(visualize_single_correlation("HighBP",splited_data,"HighBP.svg"))
+                if "Cholestérol(HighChol)" in champs0:
+                    st.subheader("**Corrélation entre le diabète et la pression artérielle**")
+                    # c1, c2, c3 = st.columns((2, 2, 2))
 
-                        c1, c2, c3 = st.columns((2, 2, 2))
-                        with c1:
-                            st.write("**Nuage de point**")
-                            st.pyplot(scatter(data=splited_men, col="bmi"))
-                        with c2:
-                            st.write("**Diagramme en bande**")
-                            st.pyplot(histplot(data=splited_men, col="bmi"))
-                        with c3:
-                            st.write("**Histogramme**")
-                            st.pyplot(densite(data=splited_men, col="bmi"))
-
-                if "Glucose" in champs3:
                     with st.container():
-                        st.markdown("**Distribution des diabétiques leur taux de glucose**")
+                        
+                        st.write("**Nuage de point**")
+                        st.pyplot(visualize_single_correlation("HighChol",splited_data,"HighChol.svg"))
+                if "IMC" in champs0:
+                    st.subheader("**Corrélation entre le diabète et la pression artérielle**")
+                    # c1, c2, c3 = st.columns((2, 2, 2))
 
-                        c1, c2, c3 = st.columns((2, 2, 2))
-                        with c1:
-                            st.write("**Nuage de point**")
-                            st.pyplot(scatter(data=splited_men, col="blood_glucose_level"))
-                        with c2:
-                            st.write("**Diagramme en bande**")
-                            st.pyplot(histplot(data=splited_men, col="blood_glucose_level"))
-                        with c3:
-                            st.write("**Histogramme**")
-                            st.pyplot(densite(data=splited_men, col="blood_glucose_level"))
-
-                if "Hypertension" in champs3:
                     with st.container():
-                        st.markdown(
-                            "**Distribution des diabétiques selon qu'ils soient hypertendus**"
-                        )
+                        
+                        st.write("**Nuage de point**")
+                        st.pyplot(histplot(splited_data,"BMI","MBI.svg"))
+                if "Alcolémie(HvyAlcoholConsump)" in champs0:
+                    st.subheader("**Corrélation entre le diabète et la pression artérielle**")
+                    # c1, c2, c3 = st.columns((2, 2, 2))
 
-                        c1, c2, c3 = st.columns((2, 2, 2))
-                        with c1:
-                            st.write("**Nuage de point**")
-                            st.pyplot(scatter(data=splited_men, col="hypertension"))
-                        with c2:
-                            st.write("**Diagramme en bande**")
-                            st.pyplot(histplot(data=splited_men, col="hypertension"))
-                        with c3:
-                            st.write("**Histogramme**")
-                            st.pyplot(densite(data=splited_men, col="hypertension"))
-
-                if "Cardio" in champs3:
                     with st.container():
-                        st.markdown("**Distribution des diabétiques selon leur cadio**")
+                        
+                        st.write("**Nuage de point**")
+                        st.pyplot(visualize_single_correlation("HvyAlcoholConsump",splited_data,"HvyAlcoholConsump.svg"))
+                    
+                
 
-                        c1, c2, c3 = st.columns((2, 2, 2))
-                        with c1:
-                            st.write("**Nuage de point**")
-                            st.pyplot(scatter(data=splited_men, col="heart_disease"))
-                        with c2:
-                            st.write("**Diagramme en bande**")
-                            st.pyplot(histplot(data=splited_men, col="heart_disease"))
-                        with c3:
-                            st.write("**Histogramme**")
-                            st.pyplot(densite(data=splited_men, col="heart_disease"))
+            # if "IMC" in champs1:
+            #     st.subheader(
+            #         "**Distribution des diabétiques selon l'indice de masse corporelle.**"
+            #     )
+            #     c1, c2, c3 = st.columns((2, 2, 2))
 
-            # =========================== Distribution des femmes ===========================
+            #     with st.container():
+            #         with c1:
+            #             st.write("**Nuage de point**")
+            #             st.pyplot(scatter(data=Diabetics, col="bmi"))
+            #         with c2:
+            #             st.write("**Diagramme en bande**")
+            #             st.pyplot(histplot(data=Diabetics, col="bmi"))
+            #         with c3:
+            #             st.write("**Histogramme**")
+            #             st.pyplot(densite(data=Diabetics, col="bmi"))
 
-            if genre == "Femmes":
-                st.subheader("**Rapports de genre dans la distribution des diabétiques**")
-                champs3 = st.multiselect(
-                    "Selectionnez un/des paramètres",
-                    ["Age", "IMC", "Glucose", "Hypertension", "Cardio"],
-                    ["Age"],
-                )
+            # if "Glucose" in champs1:
+            #     st.subheader("**Distribution des diabétiques selon leur taux de glucose**")
+            #     c1, c2, c3 = st.columns((2, 2, 2))
 
-                splited_female = female.loc[
-                    (female["age"] >= values[0]) & (female["age"] <= values[1])
-                ]
+            #     with st.container():
+            #         with c1:
+            #             st.write("**Nuage de point**")
+            #             st.pyplot(scatter(data=Diabetics, col="blood_glucose_level"))
+            #         with c2:
+            #             st.write("**Diagramme en bande**")
+            #             st.pyplot(histplot(data=Diabetics, col="blood_glucose_level"))
+            #         with c3:
+            #             st.write("**Histogramme**")
+            #             st.pyplot(densite(data=Diabetics, col="blood_glucose_level"))
 
-                st.subheader("**Femmes**")
-                if "Age" in champs3:
-                    with st.container():
-                        st.markdown(
-                            "**Distribution des femmes diabétiques selon leur age**"
-                        )
+            # if "Hypertension" in champs1:
+            #     st.subheader(
+            #         "**Distribution des diabétiques selon qu'ils soient hypertendus**"
+            #     )
+            #     c1, c2, c3 = st.columns((2, 2, 2))
 
-                        c1, c2, c3 = st.columns((2, 2, 2))
-                        with c1:
-                            st.write("**Nuage de point**")
-                            st.pyplot(scatter(data=splited_female, col="age"))
-                        with c2:
-                            st.write("**Diagramme en bande**")
-                            st.pyplot(histplot(data=splited_female, col="age"))
-                        with c3:
-                            st.write("**Histogramme**")
-                            st.pyplot(densite(data=splited_female, col="age"))
+            #     with st.container():
+            #         with c1:
+            #             st.write("**Nuage de point**")
+            #             st.pyplot(scatter(data=Diabetics, col="hypertension"))
+            #         with c2:
+            #             st.write("**Diagramme en bande**")
+            #             st.pyplot(histplot(data=Diabetics, col="hypertension"))
+            #         with c3:
+            #             st.write("**Histogramme**")
+            #             st.pyplot(densite(data=Diabetics, col="hypertension"))
 
-                if "IMC" in champs3:
-                    with st.container():
-                        st.markdown(
-                            "**Distribution des hommes diabetiques selon leur imc**"
-                        )
+            # if "Cardio" in champs1:
+            #     st.subheader(
+            #         "**Distribution des diabétiques qu'ils soient atteints de maladies cardiaques**"
+            #     )
+            #     c1, c2, c3 = st.columns((2, 2, 2))
 
-                        c1, c2, c3 = st.columns((2, 2, 2))
-                        with c1:
-                            st.write("**Nuage de point**")
-                            st.pyplot(scatter(data=splited_female, col="bmi"))
-                        with c2:
-                            st.write("**Diagramme en bande**")
-                            st.pyplot(histplot(data=splited_female, col="bmi"))
-                        with c3:
-                            st.write("**Histogramme**")
-                            st.pyplot(densite(data=splited_female, col="bmi"))
+            #     with st.container():
+            #         with c1:
+            #             st.write("**Nuage de point**")
+            #             st.pyplot(scatter(data=Diabetics, col="heart_disease"))
+            #         with c2:
+            #             st.write("**Diagramme en bande**")
+            #             st.pyplot(histplot(data=Diabetics, col="heart_disease"))
+            #         with c3:
+            #             st.write("**Histogramme**")
+            #             st.pyplot(densite(data=Diabetics, col="heart_disease"))
 
-                if "Glucose" in champs3:
-                    with st.container():
-                        st.markdown(
-                            "**Distribution des hommes selon leur taux de glucose**"
-                        )
+            # # =========================== Distribution de l'homme ===========================
 
-                        c1, c2, c3 = st.columns((2, 2, 2))
-                        with c1:
-                            st.write("**Nuage de point**")
-                            st.pyplot(
-                                scatter(data=splited_female, col="blood_glucose_level")
-                            )
-                        with c2:
-                            st.write("**Diagramme en bande**")
-                            st.pyplot(
-                                histplot(data=splited_female, col="blood_glucose_level")
-                            )
-                        with c3:
-                            st.write("**Histogramme**")
-                            st.pyplot(
-                                densite(data=splited_female, col="blood_glucose_level")
-                            )
+            # if genre == "Hommes":
+            #     st.subheader("**Rapports de genre dans la distribution des diabétiques**")
+            #     # st.markdown('**This is a string that explains something above.**')
 
-                if "Hypertension" in champs3:
-                    with st.container():
-                        st.markdown(
-                            "**Distribution des diabétiques selon qu'ils soient hypertendus**"
-                        )
+            #     champs3 = st.multiselect(
+            #         "Selectionnez un/des paramètres",
+            #         ["IMC", "Age", "Glucose", "Hypertension", "Cardio"],
+            #         ["IMC"],
+            #     )
+            #     splited_men = mens.loc[
+            #         (mens["age"] >= values[0]) & (mens["age"] <= values[1])
+            #     ]
 
-                        c1, c2, c3 = st.columns((2, 2, 2))
-                        with c1:
-                            st.write("**Nuage de point**")
-                            st.pyplot(scatter(data=splited_female, col="hypertension"))
-                        with c2:
-                            st.write("**Diagramme en bande**")
-                            st.pyplot(histplot(data=splited_female, col="hypertension"))
-                        with c3:
-                            st.write("**Histogramme**")
-                            st.pyplot(densite(data=splited_female, col="hypertension"))
+            #     st.subheader("**Hommes**")
+            #     if "Age" in champs3:
+            #         with st.container():
+            #             st.markdown(
+            #                 "**Distribution des hommes diabétiques selon leur age**"
+            #             )
 
-                if "Cardio" in champs3:
-                    with st.container():
-                        st.markdown(
-                            "**Distribution des diabétiques selon qu'ils soient hypertendus**"
-                        )
+            #             c1, c2, c3 = st.columns((2, 2, 2))
+            #             with c1:
+            #                 st.write("**Nuage de point**")
+            #                 st.pyplot(scatter(data=splited_men, col="age"))
+            #             with c2:
+            #                 st.write("**Diagramme en bande**")
+            #                 st.pyplot(histplot(data=splited_men, col="age"))
+            #             with c3:
+            #                 st.write("**Histogramme**")
+            #                 st.pyplot(densite(data=splited_men, col="age"))
 
-                        c1, c2, c3 = st.columns((2, 2, 2))
-                        with c1:
-                            st.write("**Nuage de point**")
-                            st.pyplot(scatter(data=splited_female, col="heart_disease"))
-                        with c2:
-                            st.write("**Diagramme en bande**")
-                            st.pyplot(histplot(data=splited_female, col="heart_disease"))
-                        with c3:
-                            st.write("**Histogramme**")
-                            st.pyplot(densite(data=splited_female, col="heart_disease"))
+            #     if "IMC" in champs3:
+            #         with st.container():
+            #             st.markdown("**Distribution des hommes selon leur IMC**")
 
-            # =========================== Similitudes ===========================
+            #             c1, c2, c3 = st.columns((2, 2, 2))
+            #             with c1:
+            #                 st.write("**Nuage de point**")
+            #                 st.pyplot(scatter(data=splited_men, col="bmi"))
+            #             with c2:
+            #                 st.write("**Diagramme en bande**")
+            #                 st.pyplot(histplot(data=splited_men, col="bmi"))
+            #             with c3:
+            #                 st.write("**Histogramme**")
+            #                 st.pyplot(densite(data=splited_men, col="bmi"))
 
-            if genre == "Similitudes":
-                st.subheader("**Rapports de genre dans la distribution des diabétiques**")
-                champs3 = st.multiselect(
-                    "Selectionnez un/des paramètres",
-                    ["Glucose", "IMC", "Age", "Hypertension", "Cardio"],
-                    ["Glucose"],
-                )
+            #     if "Glucose" in champs3:
+            #         with st.container():
+            #             st.markdown("**Distribution des diabétiques leur taux de glucose**")
 
-                splited_female = female.loc[
-                    (female["age"] >= values[0]) & (female["age"] <= values[1])
-                ]
-                splited_men = mens.loc[
-                    (mens["age"] >= values[0]) & (mens["age"] <= values[1])
-                ]
+            #             c1, c2, c3 = st.columns((2, 2, 2))
+            #             with c1:
+            #                 st.write("**Nuage de point**")
+            #                 st.pyplot(scatter(data=splited_men, col="blood_glucose_level"))
+            #             with c2:
+            #                 st.write("**Diagramme en bande**")
+            #                 st.pyplot(histplot(data=splited_men, col="blood_glucose_level"))
+            #             with c3:
+            #                 st.write("**Histogramme**")
+            #                 st.pyplot(densite(data=splited_men, col="blood_glucose_level"))
 
-                st.subheader("**Similitudes**")
-                if "Age" in champs3:
-                    with st.container():
-                        st.markdown(
-                            "**Comparaison des hommes et femmes diabétiques selon leur age**"
-                        )
+            #     if "Hypertension" in champs3:
+            #         with st.container():
+            #             st.markdown(
+            #                 "**Distribution des diabétiques selon qu'ils soient hypertendus**"
+            #             )
 
-                        c1, c2 = st.columns((3, 3))
-                        with c1:
-                            st.write("**Hommes**")
-                            st.pyplot(histplot(data=splited_men, col="age"))
-                        with c2:
-                            st.write("**Femmes**")
+            #             c1, c2, c3 = st.columns((2, 2, 2))
+            #             with c1:
+            #                 st.write("**Nuage de point**")
+            #                 st.pyplot(scatter(data=splited_men, col="hypertension"))
+            #             with c2:
+            #                 st.write("**Diagramme en bande**")
+            #                 st.pyplot(histplot(data=splited_men, col="hypertension"))
+            #             with c3:
+            #                 st.write("**Histogramme**")
+            #                 st.pyplot(densite(data=splited_men, col="hypertension"))
 
-                            st.pyplot(histplot(data=splited_female, col="age"))
+            #     if "Cardio" in champs3:
+            #         with st.container():
+            #             st.markdown("**Distribution des diabétiques selon leur cadio**")
 
-                if "IMC" in champs3:
-                    with st.container():
-                        st.markdown(
-                            "**Comparaison des hommes et femmes diabétiques selon leur IMC**"
-                        )
+            #             c1, c2, c3 = st.columns((2, 2, 2))
+            #             with c1:
+            #                 st.write("**Nuage de point**")
+            #                 st.pyplot(scatter(data=splited_men, col="heart_disease"))
+            #             with c2:
+            #                 st.write("**Diagramme en bande**")
+            #                 st.pyplot(histplot(data=splited_men, col="heart_disease"))
+            #             with c3:
+            #                 st.write("**Histogramme**")
+            #                 st.pyplot(densite(data=splited_men, col="heart_disease"))
 
-                        c1, c2 = st.columns((3, 3))
-                        with c1:
-                            st.write("**Hommes**")
-                            st.pyplot(histplot(data=splited_men, col="bmi"))
-                        with c2:
-                            st.write("**Femmes**")
+            # # =========================== Distribution des femmes ===========================
 
-                            st.pyplot(histplot(data=splited_female, col="bmi"))
+            # if genre == "Femmes":
+            #     st.subheader("**Rapports de genre dans la distribution des diabétiques**")
+            #     champs3 = st.multiselect(
+            #         "Selectionnez un/des paramètres",
+            #         ["Age", "IMC", "Glucose", "Hypertension", "Cardio"],
+            #         ["Age"],
+            #     )
 
-                if "Glucose" in champs3:
-                    with st.container():
-                        st.markdown(
-                            "**Comparaison des hommes et femmes diabétiques selon leur taux de glucose**"
-                        )
+            #     splited_female = female.loc[
+            #         (female["age"] >= values[0]) & (female["age"] <= values[1])
+            #     ]
 
-                        c1, c2 = st.columns((3, 3))
-                        with c1:
-                            st.write("**Hommes**")
-                            st.pyplot(histplot(data=splited_men, col="blood_glucose_level"))
-                        with c2:
-                            st.write("**Femmes**")
+            #     st.subheader("**Femmes**")
+            #     if "Age" in champs3:
+            #         with st.container():
+            #             st.markdown(
+            #                 "**Distribution des femmes diabétiques selon leur age**"
+            #             )
 
-                            st.pyplot(
-                                histplot(data=splited_female, col="blood_glucose_level")
-                            )
+            #             c1, c2, c3 = st.columns((2, 2, 2))
+            #             with c1:
+            #                 st.write("**Nuage de point**")
+            #                 st.pyplot(scatter(data=splited_female, col="age"))
+            #             with c2:
+            #                 st.write("**Diagramme en bande**")
+            #                 st.pyplot(histplot(data=splited_female, col="age"))
+            #             with c3:
+            #                 st.write("**Histogramme**")
+            #                 st.pyplot(densite(data=splited_female, col="age"))
 
-                if "Hypertension" in champs3:
-                    with st.container():
-                        st.markdown(
-                            "**Comparaison des hommes et femmes diabétiques selon qu'ils soient hypertendus**"
-                        )
+            #     if "IMC" in champs3:
+            #         with st.container():
+            #             st.markdown(
+            #                 "**Distribution des hommes diabetiques selon leur imc**"
+            #             )
 
-                        c1, c2 = st.columns((3, 3))
-                        with c1:
-                            st.write("**Hommes**")
-                            st.pyplot(histplot(data=splited_men, col="hypertension"))
-                        with c2:
-                            st.write("**Femmes**")
+            #             c1, c2, c3 = st.columns((2, 2, 2))
+            #             with c1:
+            #                 st.write("**Nuage de point**")
+            #                 st.pyplot(scatter(data=splited_female, col="bmi"))
+            #             with c2:
+            #                 st.write("**Diagramme en bande**")
+            #                 st.pyplot(histplot(data=splited_female, col="bmi"))
+            #             with c3:
+            #                 st.write("**Histogramme**")
+            #                 st.pyplot(densite(data=splited_female, col="bmi"))
 
-                            st.pyplot(histplot(data=splited_female, col="hypertension"))
+            #     if "Glucose" in champs3:
+            #         with st.container():
+            #             st.markdown(
+            #                 "**Distribution des hommes selon leur taux de glucose**"
+            #             )
 
-                if "Cardio" in champs3:
-                    with st.container():
-                        st.markdown(
-                            "**Comparaison des hommes et femmes diabétiques selon leur cardio**"
-                        )
+            #             c1, c2, c3 = st.columns((2, 2, 2))
+            #             with c1:
+            #                 st.write("**Nuage de point**")
+            #                 st.pyplot(
+            #                     scatter(data=splited_female, col="blood_glucose_level")
+            #                 )
+            #             with c2:
+            #                 st.write("**Diagramme en bande**")
+            #                 st.pyplot(
+            #                     histplot(data=splited_female, col="blood_glucose_level")
+            #                 )
+            #             with c3:
+            #                 st.write("**Histogramme**")
+            #                 st.pyplot(
+            #                     densite(data=splited_female, col="blood_glucose_level")
+            #                 )
 
-                        c1, c2 = st.columns((3, 3))
-                        with c1:
-                            st.write("**Hommes**")
-                            st.pyplot(histplot(data=splited_men, col="heart_disease"))
-                        with c2:
-                            st.write("**Femmes**")
+            #     if "Hypertension" in champs3:
+            #         with st.container():
+            #             st.markdown(
+            #                 "**Distribution des diabétiques selon qu'ils soient hypertendus**"
+            #             )
 
-                            st.pyplot(histplot(data=splited_female, col="heart_disease"))
+            #             c1, c2, c3 = st.columns((2, 2, 2))
+            #             with c1:
+            #                 st.write("**Nuage de point**")
+            #                 st.pyplot(scatter(data=splited_female, col="hypertension"))
+            #             with c2:
+            #                 st.write("**Diagramme en bande**")
+            #                 st.pyplot(histplot(data=splited_female, col="hypertension"))
+            #             with c3:
+            #                 st.write("**Histogramme**")
+            #                 st.pyplot(densite(data=splited_female, col="hypertension"))
+
+            #     if "Cardio" in champs3:
+            #         with st.container():
+            #             st.markdown(
+            #                 "**Distribution des diabétiques selon qu'ils soient hypertendus**"
+            #             )
+
+            #             c1, c2, c3 = st.columns((2, 2, 2))
+            #             with c1:
+            #                 st.write("**Nuage de point**")
+            #                 st.pyplot(scatter(data=splited_female, col="heart_disease"))
+            #             with c2:
+            #                 st.write("**Diagramme en bande**")
+            #                 st.pyplot(histplot(data=splited_female, col="heart_disease"))
+            #             with c3:
+            #                 st.write("**Histogramme**")
+            #                 st.pyplot(densite(data=splited_female, col="heart_disease"))
+
+            # # =========================== Similitudes ===========================
+
+            # if genre == "Similitudes":
+            #     st.subheader("**Rapports de genre dans la distribution des diabétiques**")
+            #     champs3 = st.multiselect(
+            #         "Selectionnez un/des paramètres",
+            #         ["Glucose", "IMC", "Age", "Hypertension", "Cardio"],
+            #         ["Glucose"],
+            #     )
+
+            #     splited_female = female.loc[
+            #         (female["age"] >= values[0]) & (female["age"] <= values[1])
+            #     ]
+            #     splited_men = mens.loc[
+            #         (mens["age"] >= values[0]) & (mens["age"] <= values[1])
+            #     ]
+
+            #     st.subheader("**Similitudes**")
+            #     if "Age" in champs3:
+            #         with st.container():
+            #             st.markdown(
+            #                 "**Comparaison des hommes et femmes diabétiques selon leur age**"
+            #             )
+
+            #             c1, c2 = st.columns((3, 3))
+            #             with c1:
+            #                 st.write("**Hommes**")
+            #                 st.pyplot(histplot(data=splited_men, col="age"))
+            #             with c2:
+            #                 st.write("**Femmes**")
+
+            #                 st.pyplot(histplot(data=splited_female, col="age"))
+
+            #     if "IMC" in champs3:
+            #         with st.container():
+            #             st.markdown(
+            #                 "**Comparaison des hommes et femmes diabétiques selon leur IMC**"
+            #             )
+
+            #             c1, c2 = st.columns((3, 3))
+            #             with c1:
+            #                 st.write("**Hommes**")
+            #                 st.pyplot(histplot(data=splited_men, col="bmi"))
+            #             with c2:
+            #                 st.write("**Femmes**")
+
+            #                 st.pyplot(histplot(data=splited_female, col="bmi"))
+
+            #     if "Glucose" in champs3:
+            #         with st.container():
+            #             st.markdown(
+            #                 "**Comparaison des hommes et femmes diabétiques selon leur taux de glucose**"
+            #             )
+
+            #             c1, c2 = st.columns((3, 3))
+            #             with c1:
+            #                 st.write("**Hommes**")
+            #                 st.pyplot(histplot(data=splited_men, col="blood_glucose_level"))
+            #             with c2:
+            #                 st.write("**Femmes**")
+
+            #                 st.pyplot(
+            #                     histplot(data=splited_female, col="blood_glucose_level")
+            #                 )
+
+            #     if "Hypertension" in champs3:
+            #         with st.container():
+            #             st.markdown(
+            #                 "**Comparaison des hommes et femmes diabétiques selon qu'ils soient hypertendus**"
+            #             )
+
+            #             c1, c2 = st.columns((3, 3))
+            #             with c1:
+            #                 st.write("**Hommes**")
+            #                 st.pyplot(histplot(data=splited_men, col="hypertension"))
+            #             with c2:
+            #                 st.write("**Femmes**")
+
+            #                 st.pyplot(histplot(data=splited_female, col="hypertension"))
+
+            #     if "Cardio" in champs3:
+            #         with st.container():
+            #             st.markdown(
+            #                 "**Comparaison des hommes et femmes diabétiques selon leur cardio**"
+            #             )
+
+            #             c1, c2 = st.columns((3, 3))
+            #             with c1:
+            #                 st.write("**Hommes**")
+            #                 st.pyplot(histplot(data=splited_men, col="heart_disease"))
+            #             with c2:
+            #                 st.write("**Femmes**")
+
+            #                 st.pyplot(histplot(data=splited_female, col="heart_disease"))
 
 
 def login(email, password):
@@ -524,6 +561,12 @@ def data_viz():
         st.empty()
         show_protected_content()
    
+
+
+
+
+
+
 
 
 
@@ -731,3 +774,655 @@ def data_viz():
     
 
 # Vérifiez si l'utilisateur est connecté
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# import streamlit as st
+# import pandas as pd
+# import matplotlib.pyplot as plt
+# import seaborn as sns
+# import time
+# import pyrebase
+# from src.func.analys_func import importation_of_dataset, diabetics, scatter, histplot, densite
+
+
+
+
+# firebaseConfig = {
+#   'apiKey': "AIzaSyB6h3v8I9oTFeohknaKYAtN85sRC3_SR7o",
+#   'authDomain': "diabeteforecast.firebaseapp.com",
+#   'projectId': "diabeteforecast",
+#   'storageBucket': "diabeteforecast.appspot.com",
+#   'databaseURL': "https://diabeteforecast-default-rtdb.firebaseio.com/",
+#   'messagingSenderId': "791146271892",
+#   'appId': "1:791146271892:web:24b258c39a6656818c1081",
+#   'measurementId': "G-0CG1BRGGNC"
+# }
+
+
+
+# # auth
+# firebase = pyrebase.initialize_app(firebaseConfig)
+# auth = firebase.auth()
+
+# # database
+# db = firebase.database()
+# storage = firebase.storage()
+
+# # Age 
+# # Genre
+# # BMI
+# # Glucose
+# # Cholesterol
+# st.set_option('deprecation.showPyplotGlobalUse', False)
+
+
+
+# def show_protected_content():
+#         st.sidebar.header("Paramètres de visualisation de données")
+#         # viz_type = st.sidebar.selectbox("Type de visualisation", ('Variables générales', 'Paramètres'))
+
+#         values = st.slider(
+#             "**Selectionnez une plage d'age pour la visualisation**", 1, 80, (1, 80)
+#         )
+#         st.write("", values)
+
+#         champs0 = st.sidebar.multiselect(
+#             "Voir les analogies",
+#             ["Vue d'ensemble","Age" ,"IMC", "Glucose", "Hypertension", "Cardio"],
+#             ["Vue d'ensemble"],
+#         )
+
+#         champs1 = st.sidebar.multiselect(
+#             "Selectionnez un/des indicateurs",
+#             ["Age", "IMC", "Glucose", "Hypertension", "Cardio"],
+#             ["Age"],
+#         )
+
+#         with st.sidebar.expander("**Paramètres avancés**"):
+#             genre = st.radio(
+#                 "**Distribution des diabétiques selon le genre**",
+#                 ("", "Hommes", "Femmes", "Similitudes"),
+#             )
+        
+#         deconnexion = st.sidebar.button("Déconnexion")
+#         if deconnexion:
+#             st.session_state.logged_in = False
+#             st.session_state.last_login_time = None
+#             st.rerun()
+
+#         # path = "diabetes_prediction_dataset.csv"
+#         path = "new_diabetes_binary.csv"
+#         data = importation_of_dataset(path)
+#         # st.write(data)
+
+#         Diabetics = diabetics(data)
+
+#         mens = Diabetics.loc[Diabetics["gender"] == "Male"]
+#         female = Diabetics.loc[Diabetics["gender"] == "Female"]
+
+#         # ================ Selectionnez un/des indicateurs ================
+#         if values:
+#             splited_data = Diabetics.loc[
+#                 (Diabetics["age"] >= values[0]) & (Diabetics["age"] <= values[1])
+#             ]
+#             if "Age" in champs1:
+#                 st.subheader("**Distribution des diabétiques selon l'âge**")
+#                 c1, c2, c3 = st.columns((2, 2, 2))
+
+#                 with st.container():
+#                     with c1:
+#                         st.write("**Nuage de point**")
+#                         st.pyplot(scatter(data=splited_data, col="age"))
+#                     with c2:
+#                         st.write("**Diagramme en bande**")
+#                         st.pyplot(histplot(data=splited_data, col="age"))
+#                     with c3:
+#                         st.write("**Histogramme**")
+#                         st.pyplot(densite(data=splited_data, col="age"))
+
+#             if "IMC" in champs1:
+#                 st.subheader(
+#                     "**Distribution des diabétiques selon l'indice de masse corporelle.**"
+#                 )
+#                 c1, c2, c3 = st.columns((2, 2, 2))
+
+#                 with st.container():
+#                     with c1:
+#                         st.write("**Nuage de point**")
+#                         st.pyplot(scatter(data=Diabetics, col="bmi"))
+#                     with c2:
+#                         st.write("**Diagramme en bande**")
+#                         st.pyplot(histplot(data=Diabetics, col="bmi"))
+#                     with c3:
+#                         st.write("**Histogramme**")
+#                         st.pyplot(densite(data=Diabetics, col="bmi"))
+
+#             if "Glucose" in champs1:
+#                 st.subheader("**Distribution des diabétiques selon leur taux de glucose**")
+#                 c1, c2, c3 = st.columns((2, 2, 2))
+
+#                 with st.container():
+#                     with c1:
+#                         st.write("**Nuage de point**")
+#                         st.pyplot(scatter(data=Diabetics, col="blood_glucose_level"))
+#                     with c2:
+#                         st.write("**Diagramme en bande**")
+#                         st.pyplot(histplot(data=Diabetics, col="blood_glucose_level"))
+#                     with c3:
+#                         st.write("**Histogramme**")
+#                         st.pyplot(densite(data=Diabetics, col="blood_glucose_level"))
+
+#             if "Hypertension" in champs1:
+#                 st.subheader(
+#                     "**Distribution des diabétiques selon qu'ils soient hypertendus**"
+#                 )
+#                 c1, c2, c3 = st.columns((2, 2, 2))
+
+#                 with st.container():
+#                     with c1:
+#                         st.write("**Nuage de point**")
+#                         st.pyplot(scatter(data=Diabetics, col="hypertension"))
+#                     with c2:
+#                         st.write("**Diagramme en bande**")
+#                         st.pyplot(histplot(data=Diabetics, col="hypertension"))
+#                     with c3:
+#                         st.write("**Histogramme**")
+#                         st.pyplot(densite(data=Diabetics, col="hypertension"))
+
+#             if "Cardio" in champs1:
+#                 st.subheader(
+#                     "**Distribution des diabétiques qu'ils soient atteints de maladies cardiaques**"
+#                 )
+#                 c1, c2, c3 = st.columns((2, 2, 2))
+
+#                 with st.container():
+#                     with c1:
+#                         st.write("**Nuage de point**")
+#                         st.pyplot(scatter(data=Diabetics, col="heart_disease"))
+#                     with c2:
+#                         st.write("**Diagramme en bande**")
+#                         st.pyplot(histplot(data=Diabetics, col="heart_disease"))
+#                     with c3:
+#                         st.write("**Histogramme**")
+#                         st.pyplot(densite(data=Diabetics, col="heart_disease"))
+
+#             # =========================== Distribution de l'homme ===========================
+
+#             if genre == "Hommes":
+#                 st.subheader("**Rapports de genre dans la distribution des diabétiques**")
+#                 # st.markdown('**This is a string that explains something above.**')
+
+#                 champs3 = st.multiselect(
+#                     "Selectionnez un/des paramètres",
+#                     ["IMC", "Age", "Glucose", "Hypertension", "Cardio"],
+#                     ["IMC"],
+#                 )
+#                 splited_men = mens.loc[
+#                     (mens["age"] >= values[0]) & (mens["age"] <= values[1])
+#                 ]
+
+#                 st.subheader("**Hommes**")
+#                 if "Age" in champs3:
+#                     with st.container():
+#                         st.markdown(
+#                             "**Distribution des hommes diabétiques selon leur age**"
+#                         )
+
+#                         c1, c2, c3 = st.columns((2, 2, 2))
+#                         with c1:
+#                             st.write("**Nuage de point**")
+#                             st.pyplot(scatter(data=splited_men, col="age"))
+#                         with c2:
+#                             st.write("**Diagramme en bande**")
+#                             st.pyplot(histplot(data=splited_men, col="age"))
+#                         with c3:
+#                             st.write("**Histogramme**")
+#                             st.pyplot(densite(data=splited_men, col="age"))
+
+#                 if "IMC" in champs3:
+#                     with st.container():
+#                         st.markdown("**Distribution des hommes selon leur IMC**")
+
+#                         c1, c2, c3 = st.columns((2, 2, 2))
+#                         with c1:
+#                             st.write("**Nuage de point**")
+#                             st.pyplot(scatter(data=splited_men, col="bmi"))
+#                         with c2:
+#                             st.write("**Diagramme en bande**")
+#                             st.pyplot(histplot(data=splited_men, col="bmi"))
+#                         with c3:
+#                             st.write("**Histogramme**")
+#                             st.pyplot(densite(data=splited_men, col="bmi"))
+
+#                 if "Glucose" in champs3:
+#                     with st.container():
+#                         st.markdown("**Distribution des diabétiques leur taux de glucose**")
+
+#                         c1, c2, c3 = st.columns((2, 2, 2))
+#                         with c1:
+#                             st.write("**Nuage de point**")
+#                             st.pyplot(scatter(data=splited_men, col="blood_glucose_level"))
+#                         with c2:
+#                             st.write("**Diagramme en bande**")
+#                             st.pyplot(histplot(data=splited_men, col="blood_glucose_level"))
+#                         with c3:
+#                             st.write("**Histogramme**")
+#                             st.pyplot(densite(data=splited_men, col="blood_glucose_level"))
+
+#                 if "Hypertension" in champs3:
+#                     with st.container():
+#                         st.markdown(
+#                             "**Distribution des diabétiques selon qu'ils soient hypertendus**"
+#                         )
+
+#                         c1, c2, c3 = st.columns((2, 2, 2))
+#                         with c1:
+#                             st.write("**Nuage de point**")
+#                             st.pyplot(scatter(data=splited_men, col="hypertension"))
+#                         with c2:
+#                             st.write("**Diagramme en bande**")
+#                             st.pyplot(histplot(data=splited_men, col="hypertension"))
+#                         with c3:
+#                             st.write("**Histogramme**")
+#                             st.pyplot(densite(data=splited_men, col="hypertension"))
+
+#                 if "Cardio" in champs3:
+#                     with st.container():
+#                         st.markdown("**Distribution des diabétiques selon leur cadio**")
+
+#                         c1, c2, c3 = st.columns((2, 2, 2))
+#                         with c1:
+#                             st.write("**Nuage de point**")
+#                             st.pyplot(scatter(data=splited_men, col="heart_disease"))
+#                         with c2:
+#                             st.write("**Diagramme en bande**")
+#                             st.pyplot(histplot(data=splited_men, col="heart_disease"))
+#                         with c3:
+#                             st.write("**Histogramme**")
+#                             st.pyplot(densite(data=splited_men, col="heart_disease"))
+
+#             # =========================== Distribution des femmes ===========================
+
+#             if genre == "Femmes":
+#                 st.subheader("**Rapports de genre dans la distribution des diabétiques**")
+#                 champs3 = st.multiselect(
+#                     "Selectionnez un/des paramètres",
+#                     ["Age", "IMC", "Glucose", "Hypertension", "Cardio"],
+#                     ["Age"],
+#                 )
+
+#                 splited_female = female.loc[
+#                     (female["age"] >= values[0]) & (female["age"] <= values[1])
+#                 ]
+
+#                 st.subheader("**Femmes**")
+#                 if "Age" in champs3:
+#                     with st.container():
+#                         st.markdown(
+#                             "**Distribution des femmes diabétiques selon leur age**"
+#                         )
+
+#                         c1, c2, c3 = st.columns((2, 2, 2))
+#                         with c1:
+#                             st.write("**Nuage de point**")
+#                             st.pyplot(scatter(data=splited_female, col="age"))
+#                         with c2:
+#                             st.write("**Diagramme en bande**")
+#                             st.pyplot(histplot(data=splited_female, col="age"))
+#                         with c3:
+#                             st.write("**Histogramme**")
+#                             st.pyplot(densite(data=splited_female, col="age"))
+
+#                 if "IMC" in champs3:
+#                     with st.container():
+#                         st.markdown(
+#                             "**Distribution des hommes diabetiques selon leur imc**"
+#                         )
+
+#                         c1, c2, c3 = st.columns((2, 2, 2))
+#                         with c1:
+#                             st.write("**Nuage de point**")
+#                             st.pyplot(scatter(data=splited_female, col="bmi"))
+#                         with c2:
+#                             st.write("**Diagramme en bande**")
+#                             st.pyplot(histplot(data=splited_female, col="bmi"))
+#                         with c3:
+#                             st.write("**Histogramme**")
+#                             st.pyplot(densite(data=splited_female, col="bmi"))
+
+#                 if "Glucose" in champs3:
+#                     with st.container():
+#                         st.markdown(
+#                             "**Distribution des hommes selon leur taux de glucose**"
+#                         )
+
+#                         c1, c2, c3 = st.columns((2, 2, 2))
+#                         with c1:
+#                             st.write("**Nuage de point**")
+#                             st.pyplot(
+#                                 scatter(data=splited_female, col="blood_glucose_level")
+#                             )
+#                         with c2:
+#                             st.write("**Diagramme en bande**")
+#                             st.pyplot(
+#                                 histplot(data=splited_female, col="blood_glucose_level")
+#                             )
+#                         with c3:
+#                             st.write("**Histogramme**")
+#                             st.pyplot(
+#                                 densite(data=splited_female, col="blood_glucose_level")
+#                             )
+
+#                 if "Hypertension" in champs3:
+#                     with st.container():
+#                         st.markdown(
+#                             "**Distribution des diabétiques selon qu'ils soient hypertendus**"
+#                         )
+
+#                         c1, c2, c3 = st.columns((2, 2, 2))
+#                         with c1:
+#                             st.write("**Nuage de point**")
+#                             st.pyplot(scatter(data=splited_female, col="hypertension"))
+#                         with c2:
+#                             st.write("**Diagramme en bande**")
+#                             st.pyplot(histplot(data=splited_female, col="hypertension"))
+#                         with c3:
+#                             st.write("**Histogramme**")
+#                             st.pyplot(densite(data=splited_female, col="hypertension"))
+
+#                 if "Cardio" in champs3:
+#                     with st.container():
+#                         st.markdown(
+#                             "**Distribution des diabétiques selon qu'ils soient hypertendus**"
+#                         )
+
+#                         c1, c2, c3 = st.columns((2, 2, 2))
+#                         with c1:
+#                             st.write("**Nuage de point**")
+#                             st.pyplot(scatter(data=splited_female, col="heart_disease"))
+#                         with c2:
+#                             st.write("**Diagramme en bande**")
+#                             st.pyplot(histplot(data=splited_female, col="heart_disease"))
+#                         with c3:
+#                             st.write("**Histogramme**")
+#                             st.pyplot(densite(data=splited_female, col="heart_disease"))
+
+#             # =========================== Similitudes ===========================
+
+#             if genre == "Similitudes":
+#                 st.subheader("**Rapports de genre dans la distribution des diabétiques**")
+#                 champs3 = st.multiselect(
+#                     "Selectionnez un/des paramètres",
+#                     ["Glucose", "IMC", "Age", "Hypertension", "Cardio"],
+#                     ["Glucose"],
+#                 )
+
+#                 splited_female = female.loc[
+#                     (female["age"] >= values[0]) & (female["age"] <= values[1])
+#                 ]
+#                 splited_men = mens.loc[
+#                     (mens["age"] >= values[0]) & (mens["age"] <= values[1])
+#                 ]
+
+#                 st.subheader("**Similitudes**")
+#                 if "Age" in champs3:
+#                     with st.container():
+#                         st.markdown(
+#                             "**Comparaison des hommes et femmes diabétiques selon leur age**"
+#                         )
+
+#                         c1, c2 = st.columns((3, 3))
+#                         with c1:
+#                             st.write("**Hommes**")
+#                             st.pyplot(histplot(data=splited_men, col="age"))
+#                         with c2:
+#                             st.write("**Femmes**")
+
+#                             st.pyplot(histplot(data=splited_female, col="age"))
+
+#                 if "IMC" in champs3:
+#                     with st.container():
+#                         st.markdown(
+#                             "**Comparaison des hommes et femmes diabétiques selon leur IMC**"
+#                         )
+
+#                         c1, c2 = st.columns((3, 3))
+#                         with c1:
+#                             st.write("**Hommes**")
+#                             st.pyplot(histplot(data=splited_men, col="bmi"))
+#                         with c2:
+#                             st.write("**Femmes**")
+
+#                             st.pyplot(histplot(data=splited_female, col="bmi"))
+
+#                 if "Glucose" in champs3:
+#                     with st.container():
+#                         st.markdown(
+#                             "**Comparaison des hommes et femmes diabétiques selon leur taux de glucose**"
+#                         )
+
+#                         c1, c2 = st.columns((3, 3))
+#                         with c1:
+#                             st.write("**Hommes**")
+#                             st.pyplot(histplot(data=splited_men, col="blood_glucose_level"))
+#                         with c2:
+#                             st.write("**Femmes**")
+
+#                             st.pyplot(
+#                                 histplot(data=splited_female, col="blood_glucose_level")
+#                             )
+
+#                 if "Hypertension" in champs3:
+#                     with st.container():
+#                         st.markdown(
+#                             "**Comparaison des hommes et femmes diabétiques selon qu'ils soient hypertendus**"
+#                         )
+
+#                         c1, c2 = st.columns((3, 3))
+#                         with c1:
+#                             st.write("**Hommes**")
+#                             st.pyplot(histplot(data=splited_men, col="hypertension"))
+#                         with c2:
+#                             st.write("**Femmes**")
+
+#                             st.pyplot(histplot(data=splited_female, col="hypertension"))
+
+#                 if "Cardio" in champs3:
+#                     with st.container():
+#                         st.markdown(
+#                             "**Comparaison des hommes et femmes diabétiques selon leur cardio**"
+#                         )
+
+#                         c1, c2 = st.columns((3, 3))
+#                         with c1:
+#                             st.write("**Hommes**")
+#                             st.pyplot(histplot(data=splited_men, col="heart_disease"))
+#                         with c2:
+#                             st.write("**Femmes**")
+
+#                             st.pyplot(histplot(data=splited_female, col="heart_disease"))
+
+
+# def login(email, password):
+#     submit = st.sidebar.button("Connexion") 
+#     if submit:
+#         # signin
+#         user = auth.sign_in_with_email_and_password(email, password)
+#         usernamedata =db.child(user['localId']).child("Username").get()
+#         if usernamedata:
+#             username = usernamedata.val()
+
+#             print(username)
+#             st.title("Welcome " + username)
+#             # Définir la session comme connectée
+#             st.session_state.logged_in = True
+#             show_protected_content()
+#             st.rerun()
+
+
+
+# def register(email, password):
+#     username = st.sidebar.text_input("Enter your username", value="John DOE")
+#     submit = st.sidebar.button("S'inscrire") 
+#     if submit:
+#         user = auth.create_user_with_email_and_password(email, password)
+#         st.success("Votre compte a été crée avec succès")
+#         st.balloons()
+#         # signin
+#         user = auth.sign_in_with_email_and_password(email, password)
+#         db.child(user['localId']).child("Username").set(username)
+#         db.child(user['localId']).child("ID").set(user['localId'])
+#         st.title("Welcome "+ username)
+#         # Définir la session comme connectée
+#         st.session_state.logged_in = True
+#         show_protected_content()
+#         st.rerun()
+
+# def data_viz():
+#     with open('style.css') as f:
+       
+#         st.sidebar.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
+#     # st.sidebar.markdown(f'<div class="image-container"><img src="https://github.com/Moubarak321/DiabetForecast/blob/main/images/dia1.png?raw=true" alt="Ma superbe image"></div>', unsafe_allow_html=True)
+       
+#         # Vérifier si l'utilisateur est connecté avant d'afficher le formulaire de connexion
+#     if not ("logged_in" in st.session_state and st.session_state.logged_in):
+#         # Afficher le formulaire de connexion
+#         st.info("👈Authentifiez vous pour accéder aux données")
+#         menu = st.sidebar.selectbox("Authentifiez-vous", ["Connexion", "Inscription"])
+#         email = st.sidebar.text_input("Your email adress", placeholder="Email")
+#         password = st.sidebar.text_input("Your password",placeholder="Mot de passe",type="password")
+        
+#         if menu == "Inscription":
+#             register(email, password)
+
+#         elif menu == "Connexion":
+#             login(email, password)
+
+#     # Vérifier si l'utilisateur est connecté avant d'afficher le contenu protégé
+#     if "logged_in" in st.session_state and st.session_state.logged_in:
+#         st.empty()
+#         show_protected_content()
+   
+
+
