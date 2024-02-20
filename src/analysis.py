@@ -43,6 +43,7 @@ def show_protected_content():
             st.sidebar.header("Paramètres de visualisation de données")
             # viz_type = st.sidebar.selectbox("Type de visualisation", ('Variables générales', 'Paramètres'))
 
+
             values = st.slider("Sélectionnez la tranche d'âge :", min_value=1, max_value=13, value=(1, 13))
             st.write("", values)
 
@@ -51,7 +52,7 @@ def show_protected_content():
                 ["Vue d'ensemble","Pression artérielle(HighBP)",
                  "Cholestérol(HighChol)", 
                  "IMC", 
-                 "Alcolémie",
+                 "Alcoolémie",
                  "Activité physique",
                  "Alimentation en fruits", 
                  "Alimentation en légumes",
@@ -109,38 +110,36 @@ def show_protected_content():
                         
                         st.write("**Nuage de point**")
                         st.pyplot(visualize_corr(splited_data))
-                        # with c2:
-                        #     st.write("**Diagramme en bande**")
-                        #     st.pyplot(visualize_corr(data=data,))
-                        # with c3:
-                        #     st.write("**Histogramme**")
-                        #     st.pyplot(visualize_corr(data=data, ))
+                        
                 if "Pression artérielle(HighBP)" in champs0:
-                    st.subheader("**Corrélation entre le diabète et la pression artérielle**")
+                    st.subheader("**Corrélation entre le diabète et la pression artérielle (HighBP)**")
                     # c1, c2, c3 = st.columns((2, 2, 2))
 
                     with st.container():
                         
                         st.write("**Nuage de point**")
                         st.pyplot(visualize_single_correlation("HighBP",splited_data,"HighBP.svg"))
+
                 if "Cholestérol(HighChol)" in champs0:
-                    st.subheader("**Corrélation entre le diabète et la pression artérielle**")
+                    st.subheader("**Corrélation entre le diabète et le taux de cholestérol(HighChol)**")
                     # c1, c2, c3 = st.columns((2, 2, 2))
 
                     with st.container():
                         
                         st.write("**Nuage de point**")
                         st.pyplot(visualize_single_correlation("HighChol",splited_data,"HighChol.svg"))
+
                 if "IMC" in champs0:
-                    st.subheader("**Corrélation entre le diabète et la pression artérielle**")
+                    st.subheader("**Corrélation entre le diabète et l'indice de masse corporel(BMI)'**")
                     # c1, c2, c3 = st.columns((2, 2, 2))
 
                     with st.container():
                         
                         st.write("**Nuage de point**")
                         st.pyplot(histplot(splited_data,"BMI","BMI.svg"))
-                if "Alcolémie" in champs0:
-                    st.subheader("**Corrélation entre le diabète et la pression artérielle**")
+
+                if "Alcoolémie" in champs0:
+                    st.subheader("**Corrélation entre le diabète et la dépendance à l'alcool(HvyAlcoholConsump)**")
                     # c1, c2, c3 = st.columns((2, 2, 2))
 
                     with st.container():
@@ -149,7 +148,7 @@ def show_protected_content():
                         st.pyplot(visualize_single_correlation("HvyAlcoholConsump",splited_data,"HvyAlcoholConsump.svg"))
                     
                 if "Activité physique" in champs0:
-                    st.subheader("**Corrélation entre le diabète et la pression artérielle**")
+                    st.subheader("**Corrélation entre le diabète et la fréquence d'activité physique(PhysActivity)**")
                     # c1, c2, c3 = st.columns((2, 2, 2))
 
                     with st.container():
@@ -158,28 +157,25 @@ def show_protected_content():
                         st.pyplot(visualize_single_correlation("PhysActivity",splited_data,"PhysActivity.svg"))
 
                 if "Alimentation en fruits" in champs0:
-                    st.subheader("**Corrélation entre le diabète et la pression artérielle**")
+                    st.subheader("**Corrélation entre le diabète et la fréquence de consommation de fruits(Fruits)**")
                     # c1, c2, c3 = st.columns((2, 2, 2))
 
                     with st.container():
                         
                         st.write("**Nuage de point**")
                         st.pyplot(visualize_single_correlation("Fruits",splited_data,"Fruits.svg"))
-                    
-
-                
+                                  
                 if "Alimentation en légumes" in champs0:
-                    st.subheader("**Corrélation entre le diabète et la pression artérielle**")
+                    st.subheader("**Corrélation entre le diabète et la fréquence de consommation de légumes(Veggies)**")
                     # c1, c2, c3 = st.columns((2, 2, 2))
 
                     with st.container():
                         
                         st.write("**Nuage de point**")
                         st.pyplot(visualize_single_correlation("Veggies",splited_data,"Veggies.svg"))
-
-                
+              
                 if "AVC" in champs0:
-                    st.subheader("**Corrélation entre le diabète et la pression artérielle**")
+                    st.subheader("**Corrélation entre le diabète et la fréquence d'accidents cardio-vasculaires(Stroke)**")
                     # c1, c2, c3 = st.columns((2, 2, 2))
 
                     with st.container():
@@ -188,37 +184,34 @@ def show_protected_content():
                         st.pyplot(visualize_single_correlation("Stroke",splited_data,"Stroke.svg"))
 
                 if "Infactus" in champs0:
-                    st.subheader("**Corrélation entre le diabète et la pression artérielle**")
+                    st.subheader("**Corrélation entre le diabète et la fréquence d'infarctus(HeartDiseaseorAttack)**")
                     # c1, c2, c3 = st.columns((2, 2, 2))
 
                     with st.container():
                         
                         st.write("**Nuage de point**")
                         st.pyplot(visualize_single_correlation("HeartDiseaseorAttack",splited_data,"HeartDiseaseorAttack.svg"))
-
-                 
+               
                 if "Fréquence de consultation" in champs0:
-                    st.subheader("**Corrélation entre le diabète et la pression artérielle**")
+                    st.subheader("**Corrélation entre le diabète et la Fréquence de consultation médicale(NoDocbcCost)**")
                     # c1, c2, c3 = st.columns((2, 2, 2))
 
                     with st.container():
                         
                         st.write("**Nuage de point**")
                         st.pyplot(visualize_single_correlation("NoDocbcCost",splited_data,"NoDocbcCost.svg"))
-
-                
+              
                 if "Age" in champs0:
-                    st.subheader("**Corrélation entre le diabète et la pression artérielle**")
+                    st.subheader("**Corrélation entre le diabète et l'age'**")
                     # c1, c2, c3 = st.columns((2, 2, 2))
 
                     with st.container():
                         
                         st.write("**Nuage de point**")
                         st.pyplot(visualize_single_correlation("Age",splited_data,"Age.svg"))
-                
-                
+                          
                 if "Sexe" in champs0:
-                    st.subheader("**Corrélation entre le diabète et la pression artérielle**")
+                    st.subheader("**Corrélation entre le diabète et le sexe du sujet**")
                     # c1, c2, c3 = st.columns((2, 2, 2))
 
                     with st.container():
