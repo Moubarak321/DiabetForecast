@@ -126,7 +126,7 @@ def show_protected_content():
                     with st.container():
                         
                         st.write("**Nuage de point**")
-                        st.pyplot(histplot(splited_data,"BMI","MBI.svg"))
+                        st.pyplot(histplot(splited_data,"BMI","BMI.svg"))
                 if "Alcolémie(HvyAlcoholConsump)" in champs0:
                     st.subheader("**Corrélation entre le diabète et la pression artérielle**")
                     # c1, c2, c3 = st.columns((2, 2, 2))

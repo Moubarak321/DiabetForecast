@@ -132,8 +132,13 @@ def visualize_corr(df):
 def histplot(df,feature, img_name):
     import seaborn as sns
     import matplotlib.pyplot as plt 
-    sns.histplot(df , x= df[feature],hue=df.Diabetes_binary ,multiple='stack' )
-    plt.figure(figsize = (6,6))
-    sns.scatterplot(df[feature])
-    plt.savefig(img_name)
+    
+    plt.figure(figsize = (10,6))
+    sns.histplot(df , x= df[feature],hue=df["Diabetes_binary"] ,multiple='stack' , bins=20)
+    # sns.scatterplot(df[feature])
+    plt.tight_layout()
+
+    plt.savefig(f"src/viz_img/{img_name}")
+
     plt.show()
+
