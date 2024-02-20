@@ -43,8 +43,26 @@ def show_protected_content():
             st.sidebar.header("Paramètres de visualisation de données")
             # viz_type = st.sidebar.selectbox("Type de visualisation", ('Variables générales', 'Paramètres'))
 
+            # Mapping des plages d'âge
+            age_mapping = {
+                (18, 24): 1,
+                (25, 29): 2,
+                (30, 34): 3,
+                (35, 39): 4,
+                (40, 44): 5,
+                (45, 49): 6,
+                (50, 54): 7,
+                (55, 59): 8,
+                (60, 64): 9,
+                (65, 69): 10,
+                (70, 74): 11,
+                (75, 80): 12,
+                (80, 84): 13,
+                # Ajoutez les autres plages d'âge...
+            }
 
-            values = st.slider("Sélectionnez la tranche d'âge :", min_value=1, max_value=13, value=(1, 13))
+            # Liste des clés du mapping (valeurs du slider)
+            values = st.slider("Sélectionnez la tranche d'âge :", min_value=18, max_value=80, value=(18, 80))
             st.write("", values)
 
             champs0 = st.sidebar.multiselect(
@@ -90,25 +108,30 @@ def show_protected_content():
             # path = "diabetes_prediction_dataset.csv"
             path = "new_diabetes_binary.csv"
             data = importation_of_dataset(path)
-            # st.write(data)
-
-            # Diabetics = diabetics(data)
-
-            # mens = Diabetics.loc[Diabetics["gender"] == "Male"]
-            # female = Diabetics.loc[Diabetics["gender"] == "Female"]
+            
 
             # ================ Selectionnez un/des indicateurs ================
+            # if values:
+            #     splited_data = data.loc[
+            #         (data["Age"] >= values[0]) & (data["Age"] <= values[1])
+            #     ]
             if values:
-                splited_data = data.loc[
-                    (data["Age"] >= values[0]) & (data["Age"] <= values[1])
-                ]
+                age_category_selected = []
+                for key, value in age_mapping.items():
+                    if values[0] <= key[0] and values[1] >= key[1]:
+                        age_category_selected.append(value)
+                    # else :
+                    #     st.write("Selectionnez une plage valide")
+
+                splited_data = data[data["Age"].isin(age_category_selected)] 
+               
                 if "Vue d'ensemble" in champs0:
                     st.subheader("**Corrélation entre tous les paramètres**")
                     # c1, c2, c3 = st.columns((2, 2, 2))
 
                     with st.container():
                         
-                        st.write("**Nuage de point**")
+                        st.write("**Visualisations**")
                         st.pyplot(visualize_corr(splited_data))
                         
                 if "Pression artérielle(HighBP)" in champs0:
@@ -117,7 +140,7 @@ def show_protected_content():
 
                     with st.container():
                         
-                        st.write("**Nuage de point**")
+                        st.write("**Visualisations**")
                         st.pyplot(visualize_single_correlation("HighBP",splited_data,"HighBP.svg"))
 
                 if "Cholestérol(HighChol)" in champs0:
@@ -126,7 +149,7 @@ def show_protected_content():
 
                     with st.container():
                         
-                        st.write("**Nuage de point**")
+                        st.write("**Visualisations**")
                         st.pyplot(visualize_single_correlation("HighChol",splited_data,"HighChol.svg"))
 
                 if "IMC" in champs0:
@@ -135,7 +158,7 @@ def show_protected_content():
 
                     with st.container():
                         
-                        st.write("**Nuage de point**")
+                        st.write("**Visualisations**")
                         st.pyplot(histplot(splited_data,"BMI","BMI.svg"))
 
                 if "Alcoolémie" in champs0:
@@ -144,7 +167,7 @@ def show_protected_content():
 
                     with st.container():
                         
-                        st.write("**Nuage de point**")
+                        st.write("**Visualisations**")
                         st.pyplot(visualize_single_correlation("HvyAlcoholConsump",splited_data,"HvyAlcoholConsump.svg"))
                     
                 if "Activité physique" in champs0:
@@ -153,7 +176,7 @@ def show_protected_content():
 
                     with st.container():
                         
-                        st.write("**Nuage de point**")
+                        st.write("**Visualisations**")
                         st.pyplot(visualize_single_correlation("PhysActivity",splited_data,"PhysActivity.svg"))
 
                 if "Alimentation en fruits" in champs0:
@@ -162,7 +185,7 @@ def show_protected_content():
 
                     with st.container():
                         
-                        st.write("**Nuage de point**")
+                        st.write("**Visualisations**")
                         st.pyplot(visualize_single_correlation("Fruits",splited_data,"Fruits.svg"))
                                   
                 if "Alimentation en légumes" in champs0:
@@ -171,7 +194,7 @@ def show_protected_content():
 
                     with st.container():
                         
-                        st.write("**Nuage de point**")
+                        st.write("**Visualisations**")
                         st.pyplot(visualize_single_correlation("Veggies",splited_data,"Veggies.svg"))
               
                 if "AVC" in champs0:
@@ -180,7 +203,7 @@ def show_protected_content():
 
                     with st.container():
                         
-                        st.write("**Nuage de point**")
+                        st.write("**Visualisations**")
                         st.pyplot(visualize_single_correlation("Stroke",splited_data,"Stroke.svg"))
 
                 if "Infactus" in champs0:
@@ -189,7 +212,7 @@ def show_protected_content():
 
                     with st.container():
                         
-                        st.write("**Nuage de point**")
+                        st.write("**Visualisations**")
                         st.pyplot(visualize_single_correlation("HeartDiseaseorAttack",splited_data,"HeartDiseaseorAttack.svg"))
                
                 if "Fréquence de consultation" in champs0:
@@ -198,7 +221,7 @@ def show_protected_content():
 
                     with st.container():
                         
-                        st.write("**Nuage de point**")
+                        st.write("**Visualisations**")
                         st.pyplot(visualize_single_correlation("NoDocbcCost",splited_data,"NoDocbcCost.svg"))
               
                 if "Age" in champs0:
@@ -207,7 +230,7 @@ def show_protected_content():
 
                     with st.container():
                         
-                        st.write("**Nuage de point**")
+                        st.write("**Visualisations**")
                         st.pyplot(visualize_single_correlation("Age",splited_data,"Age.svg"))
                           
                 if "Sexe" in champs0:
@@ -216,7 +239,7 @@ def show_protected_content():
 
                     with st.container():
                         
-                        st.write("**Nuage de point**")
+                        st.write("**Visualisations**")
                         st.pyplot(visualize_single_correlation("Sex",splited_data,"Sex.svg"))
                 
     
