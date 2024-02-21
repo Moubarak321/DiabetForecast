@@ -1,7 +1,7 @@
 import streamlit as st 
 from streamlit_option_menu import option_menu
 # from streamlit import option_menu
-from src import analysis 
+from src import analysis , forecast
 import random
 
 
@@ -70,5 +70,8 @@ if menu == "Accueil":
 
 elif menu == "Analyses":
     analysis.data_viz()
+
+elif menu == "Prévisions":
+    forecast.coming_soon()
 
 

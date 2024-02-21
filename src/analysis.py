@@ -75,7 +75,7 @@ def show_protected_content():
                
                  ],
 
-                ["Vue d'ensemble"],
+                ["IMC"],
             )
 
             with st.sidebar.expander("**Paramètres avancés**"):
@@ -374,6 +374,8 @@ def register(email, password):
         st.session_state.logged_in = True
         show_protected_content()
         st.rerun()
+
+
 
 def data_viz():
     with open('style.css') as f:
