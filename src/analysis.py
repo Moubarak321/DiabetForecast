@@ -165,7 +165,8 @@ def show_protected_content():
                 splited_data = data[data["Age"].isin(age_category_selected)] 
                
                 if "Vue d'ensemble" in champs0:
-                    st.subheader("**Corrélation entre tous les paramètres**")
+                    # st.subheader("**Corrélation entre tous les paramètres**")
+                    st.subheader('Corrélation entre tous les paramètres', divider='rainbow')
                     # c1, c2, c3 = st.columns((2, 2, 2))
 
                     with st.container():
@@ -174,7 +175,7 @@ def show_protected_content():
                         st.pyplot(visualize_corr(splited_data))
                         
                 if "Pression artérielle(HighBP)" in champs0:
-                    st.subheader("**Corrélation entre le diabète et la pression artérielle (HighBP)**")
+                    st.subheader("**Corrélation entre le diabète et la pression artérielle (HighBP)**", divider='rainbow')
                     # c1, c2, c3 = st.columns((2, 2, 2))
 
                     with st.container():
@@ -183,7 +184,7 @@ def show_protected_content():
                         st.pyplot(visualize_single_correlation("HighBP",splited_data,"HighBP.svg"))
 
                 if "Cholestérol(HighChol)" in champs0:
-                    st.subheader("**Corrélation entre le diabète et le taux de cholestérol(HighChol)**")
+                    st.subheader("**Corrélation entre le diabète et le taux de cholestérol(HighChol)**", divider='rainbow')
                     # c1, c2, c3 = st.columns((2, 2, 2))
 
                     with st.container():
@@ -192,7 +193,7 @@ def show_protected_content():
                         st.pyplot(visualize_single_correlation("HighChol",splited_data,"HighChol.svg"))
 
                 if "IMC" in champs0:
-                    st.subheader("**Corrélation entre le diabète et l'indice de masse corporel(BMI)'**")
+                    st.subheader("**Corrélation entre le diabète et l'indice de masse corporel(BMI)'**", divider='rainbow')
                     # c1, c2, c3 = st.columns((2, 2, 2))
 
                     with st.container():
@@ -201,7 +202,7 @@ def show_protected_content():
                         st.pyplot(histplot(splited_data,"BMI","BMI.svg"))
 
                 if "Alcoolémie" in champs0:
-                    st.subheader("**Corrélation entre le diabète et la dépendance à l'alcool(HvyAlcoholConsump)**")
+                    st.subheader("**Corrélation entre le diabète et la dépendance à l'alcool(HvyAlcoholConsump)**", divider='rainbow')
                     # c1, c2, c3 = st.columns((2, 2, 2))
 
                     with st.container():
@@ -210,7 +211,7 @@ def show_protected_content():
                         st.pyplot(visualize_single_correlation("HvyAlcoholConsump",splited_data,"HvyAlcoholConsump.svg"))
                     
                 if "Activité physique" in champs0:
-                    st.subheader("**Corrélation entre le diabète et la fréquence d'activité physique(PhysActivity)**")
+                    st.subheader("**Corrélation entre le diabète et la fréquence d'activité physique(PhysActivity)**", divider='rainbow')
                     # c1, c2, c3 = st.columns((2, 2, 2))
 
                     with st.container():
@@ -219,7 +220,7 @@ def show_protected_content():
                         st.pyplot(visualize_single_correlation("PhysActivity",splited_data,"PhysActivity.svg"))
 
                 if "Alimentation en fruits" in champs0:
-                    st.subheader("**Corrélation entre le diabète et la fréquence de consommation de fruits(Fruits)**")
+                    st.subheader("**Corrélation entre le diabète et la fréquence de consommation de fruits(Fruits)**", divider='rainbow')
                     # c1, c2, c3 = st.columns((2, 2, 2))
 
                     with st.container():
@@ -228,7 +229,7 @@ def show_protected_content():
                         st.pyplot(visualize_single_correlation("Fruits",splited_data,"Fruits.svg"))
                                   
                 if "Alimentation en légumes" in champs0:
-                    st.subheader("**Corrélation entre le diabète et la fréquence de consommation de légumes(Veggies)**")
+                    st.subheader("**Corrélation entre le diabète et la fréquence de consommation de légumes(Veggies)**", divider='rainbow')
                     # c1, c2, c3 = st.columns((2, 2, 2))
 
                     with st.container():
@@ -237,7 +238,7 @@ def show_protected_content():
                         st.pyplot(visualize_single_correlation("Veggies",splited_data,"Veggies.svg"))
               
                 if "AVC" in champs0:
-                    st.subheader("**Corrélation entre le diabète et la fréquence d'accidents cardio-vasculaires(Stroke)**")
+                    st.subheader("**Corrélation entre le diabète et la fréquence d'accidents cardio-vasculaires(Stroke)**", divider='rainbow')
                     # c1, c2, c3 = st.columns((2, 2, 2))
 
                     with st.container():
@@ -246,7 +247,7 @@ def show_protected_content():
                         st.pyplot(visualize_single_correlation("Stroke",splited_data,"Stroke.svg"))
 
                 if "Infactus" in champs0:
-                    st.subheader("**Corrélation entre le diabète et la fréquence d'infarctus(HeartDiseaseorAttack)**")
+                    st.subheader("**Corrélation entre le diabète et la fréquence d'infarctus(HeartDiseaseorAttack)**", divider='rainbow')
                     # c1, c2, c3 = st.columns((2, 2, 2))
 
                     with st.container():
@@ -255,7 +256,7 @@ def show_protected_content():
                         st.pyplot(visualize_single_correlation("HeartDiseaseorAttack",splited_data,"HeartDiseaseorAttack.svg"))
                
                 if "Fréquence de consultation" in champs0:
-                    st.subheader("**Corrélation entre le diabète et la Fréquence de consultation médicale(NoDocbcCost)**")
+                    st.subheader("**Corrélation entre le diabète et la Fréquence de consultation médicale(NoDocbcCost)**", divider='rainbow')
                     # c1, c2, c3 = st.columns((2, 2, 2))
 
                     with st.container():
@@ -264,7 +265,7 @@ def show_protected_content():
                         st.pyplot(visualize_single_correlation("NoDocbcCost",splited_data,"NoDocbcCost.svg"))
               
                 if "Age" in champs0:
-                    st.subheader("**Corrélation entre le diabète et l'age'**")
+                    st.subheader("**Corrélation entre le diabète et l'age'**", divider='rainbow')
                     # c1, c2, c3 = st.columns((2, 2, 2))
 
                     with st.container():
@@ -273,7 +274,7 @@ def show_protected_content():
                         st.pyplot(visualize_single_correlation("Age",splited_data,"Age.svg"))
                           
                 if "Sexe" in champs0:
-                    st.subheader("**Corrélation entre le diabète et le sexe du sujet**")
+                    st.subheader("**Corrélation entre le diabète et le sexe du sujet**", divider='rainbow')
                     # c1, c2, c3 = st.columns((2, 2, 2))
 
                     with st.container():
@@ -288,7 +289,7 @@ def show_protected_content():
                 # ==============================================================
                 
                 if var_secondaires == "Indicateurs liés à la santé du sujet":
-                    st.subheader("**Indicateurs liés à la santé du sujet**")
+                    st.subheader("**Indicateurs liés à la santé du sujet**", divider='rainbow')
                     # st.markdown('**This is a string that explains something above.**')
 
                     choix_sante_sujet= st.multiselect(
@@ -300,41 +301,41 @@ def show_protected_content():
                     # st.subheader("**Hommes**")
                     if "Difficultés motrices(DiffWalk)" in choix_sante_sujet:
                         with st.container():
-                            st.markdown(
+                            st.info(
                                 "**Distribution des sujets selon leur dyspraxie motrice**"
                             )
                             st.pyplot(visualize_single_correlation("DiffWalk",splited_data,"DiffWalk.svg"))
 
                     if "AVC(Stroke)" in choix_sante_sujet:
                         with st.container():
-                            st.markdown(
+                            st.info(
                                 "**Distribution des sujets selon qu'ils aient déjà eu un avc ou pas**"
                             )
                             st.pyplot(visualize_single_correlation("Stroke",splited_data,"Stroke.svg"))
 
                     if "Santé mentale(MentHlth)" in choix_sante_sujet:
                         with st.container():
-                            st.markdown(
+                            st.info(
                                 "**Distribution des sujets selon le etat de santé emotionnel(le stress, la dépression ...)**"
                             )
                             st.pyplot(visualize_single_correlation("MentHlth",splited_data,"MentHlth.svg"))
                     
                     if "Infarctus|Maladies du coeur" in choix_sante_sujet:
                         with st.container():
-                            st.markdown(
+                            st.info(
                                 "**Distribution des sujets selon qu'ils aient déjà eu une maladie coronarienne (CHD) ou un infarctus du myocarde**"
                             )
                             st.pyplot(visualize_single_correlation("HeartDiseaseorAttack",splited_data,"HeartDiseaseorAttack.svg"))
 
                     if "Etat de santé général" in choix_sante_sujet:
                         with st.container():
-                            st.markdown(
+                            st.info(
                                 "**Distribution des sujets selon leur état de santé en général**"
                             )
                             st.pyplot(visualize_single_correlation("GenHlth",splited_data,"GenHlth.svg"))
 
                 if var_secondaires =="Indicateurs relatifs au mode de vie du sujet":
-                    st.subheader("**Indicateurs relatifs au mode de vie du sujet**")
+                    st.subheader("**Indicateurs relatifs au mode de vie du sujet**", divider='rainbow')
                     choix_mode_de_vie= st.multiselect(
                         "Selectionnez un/des paramètres",
                         [ "Activité physique(PhysActivity)", "Alimentation en légumes(Veggies)", "Alimentation en fruits(Fruits)"],
@@ -350,14 +351,14 @@ def show_protected_content():
                     
                     if "Alimentation en légumes(Veggies)" in choix_mode_de_vie:
                         with st.container():
-                            st.markdown(
+                            st.info(
                                 "**Distribution des sujets selon leur fréquence d'activité physique**"
                             )
                             st.pyplot(visualize_single_correlation("Veggies",splited_data,"Veggies.svg"))
                     
                     if "Alimentation en fruits(Fruits)" in choix_mode_de_vie:
                         with st.container():
-                            st.markdown(
+                            st.info(
                                 "**Distribution des sujets selon leur fréquence d'activité physique**"
                             )
                             st.pyplot(visualize_single_correlation("Fruits",splited_data,"Fruits.svg"))
@@ -939,7 +940,7 @@ def data_viz():
 
 #             if genre == "Hommes":
 #                 st.subheader("**Rapports de genre dans la distribution des diabétiques**")
-#                 # st.markdown('**This is a string that explains something above.**')
+#                 # st.info('**This is a string that explains something above.**')
 
 #                 champs3 = st.multiselect(
 #                     "Selectionnez un/des paramètres",
