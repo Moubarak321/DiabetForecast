@@ -63,37 +63,37 @@ def show_protected_content():
 
             # Liste des clés du mapping (valeurs du slider)
             values = st.slider("Sélectionnez la tranche d'âge :", min_value=18, max_value=80, value=(18, 80))
-            st.write("", values)
+            # st.write("", values)
 
             champs0 = st.sidebar.multiselect(
                 "Variables générales",
                 ["Vue d'ensemble",
                  "IMC", 
                  "Pression artérielle(HighBP)",
-                 "Alcoolémie",
                  "Cholestérol(HighChol)", 
-                 "Activité physique",
-                 "Alimentation en fruits", 
-                 "Alimentation en légumes",
-                 "AVC",
-                 "Infactus",
-                 "Fréquence de consultation", 
-                #  "Etat de santé",
-                #  "Santé mentale", 
-                 "Age",
-                 "Sexe",
                  "Propension à la cigarette",
+                 "Alcoolémie",
+                #  "Activité physique",
+                #  "Alimentation en fruits", 
+                #  "Alimentation en légumes",
+                #  "AVC",
+                #  "Infactus",
+                #  "Fréquence de consultation", 
+                # #  "Etat de santé",
+                # #  "Santé mentale", 
+                #  "Age",
+                #  "Sexe",
                  ],
 
                 ["Vue d'ensemble"],
             )
 
             with st.sidebar.expander("**Paramètres avancés**"):
-                genre = st.radio(
+                var_secondaires = st.radio(
                     "**Variables secondaires**",
                     ("", "Indicateurs liés à la santé du sujet", 
                         "Indicateurs relatifs au mode de vie du sujet", 
-                        "Indicateurs relatifs aux soins de santé"
+                        "Indicateurs relatifs aux soins de santé",
                         "Caractéristiques sociaux"
                     ),
             )
@@ -280,7 +280,59 @@ def show_protected_content():
                         
                         st.write("**Visualisations**")
                         st.pyplot(visualize_single_correlation("Sex",splited_data,"Sex.svg"))
+
                 
+
+                # ==============================================================
+                # debut var secondaire
+                # ==============================================================
+                
+                if var_secondaires == "Indicateurs liés à la santé du sujet":
+                    st.subheader("**Indicateurs liés à la santé du sujet**")
+                    # st.markdown('**This is a string that explains something above.**')
+
+                    choix_sante_sujet= st.multiselect(
+                        "Selectionnez un/des paramètres",
+                        [ "Santé mentale(MentHlth)", "Difficultés motrices(DiffWalk)", "AVC(Stroke)", "Infarctus|Maladies du coeur", "Etat de santé général"],
+                        ["Difficultés motrices(DiffWalk)"],
+                    )
+                    
+                    # st.subheader("**Hommes**")
+                    if "Difficultés motrices(DiffWalk)" in choix_sante_sujet:
+                        with st.container():
+                            st.markdown(
+                                "**Distribution des sujets selon leur dyspraxie motrice**"
+                            )
+                            st.pyplot(visualize_single_correlation("DiffWalk",splited_data,"DiffWalk.svg"))
+
+                    if "AVC(Stroke)" in choix_sante_sujet:
+                        with st.container():
+                            st.markdown(
+                                "**Distribution des sujets selon qu'ils aient déjà eu un avc ou pas**"
+                            )
+                            st.pyplot(visualize_single_correlation("Stroke",splited_data,"Stroke.svg"))
+
+                    if "Santé mentale(MentHlth)" in choix_sante_sujet:
+                        with st.container():
+                            st.markdown(
+                                "**Distribution des sujets selon le etat de santé emotionnel(le stress, la dépression ...)**"
+                            )
+                            st.pyplot(visualize_single_correlation("MentHlth",splited_data,"MentHlth.svg"))
+                    
+                    if "Infarctus|Maladies du coeur" in choix_sante_sujet:
+                        with st.container():
+                            st.markdown(
+                                "**Distribution des sujets selon qu'ils aient déjà eu une maladie coronarienne (CHD) ou un infarctus du myocarde**"
+                            )
+                            st.pyplot(visualize_single_correlation("HeartDiseaseorAttack",splited_data,"HeartDiseaseorAttack.svg"))
+
+                    if "Etat de santé général" in choix_sante_sujet:
+                        with st.container():
+                            st.markdown(
+                                "**Distribution des sujets selon leur état de santé en général**"
+                            )
+                            st.pyplot(visualize_single_correlation("GenHlth",splited_data,"GenHlth.svg"))
+
                
 
 
