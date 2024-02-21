@@ -1,8 +1,15 @@
 import streamlit as st 
-@st.cache_resource(experimental_allow_widgets=True)
+# @st.cache_resource(experimental_allow_widgets=True)
+@st.cache_data
 def importation_of_dataset(path):
     import pandas as pd
+    import streamlit as st 
+    import time
+    
     data = pd.read_csv(path)
+    with st.spinner('Chargement des données...'):
+        time.sleep(5)
+    # st.success("Données chargées avec succès")
     return data
 
 # # diabetics patients
@@ -85,6 +92,8 @@ def visualize_single_correlation(feature_name, df, img_name):
     import seaborn as sns
     import matplotlib.pyplot as plt
     import pandas as pd
+    import streamlit as st
+    import time
     
     fig, axes = plt.subplots(2, 2, figsize=(15, 12))
 
@@ -106,6 +115,9 @@ def visualize_single_correlation(feature_name, df, img_name):
 
     plt.tight_layout()
     plt.savefig(f"src/viz_img/{img_name}")
+    with st.spinner('Traitement...'):
+        time.sleep(5)
+    # st.success('Vos données sont prêtes!')
     plt.show()
 
 
@@ -140,6 +152,8 @@ def visualize_single_correlation(feature_name, df, img_name):
 def visualize_corr(df):
     import seaborn as sns
     import matplotlib.pyplot as plt  # Import correctement pyplot de matplotlib
+    import streamlit as st
+    import time
     # %config InlineBackend.figure_formats = 'svg'
     # Calculez les corrélations et tracez le graphique
     corr = df.drop('Diabetes_binary', axis=1).corrwith(df.Diabetes_binary).sort_values(ascending=False)
@@ -155,19 +169,24 @@ def visualize_corr(df):
     # Réglez les étiquettes x
     plt.xticks(rotation=45, ha='right', size=15)
     # plt.savefig('correlation_plot.png')
-
+    with st.spinner('Traitement...'):
+        time.sleep(5)
     plt.show()  # Affichez le graphique
+
+
 
 def histplot(df,feature, img_name):
     import seaborn as sns
     import matplotlib.pyplot as plt 
-    
+    import streamlit as st 
+    import time
     plt.figure(figsize = (10,6))
     sns.kdeplot(df , x= df[feature],hue=df["Diabetes_binary"] ,multiple='stack' )
     # sns.scatterplot(df[feature])
     plt.tight_layout()
 
     plt.savefig(f"src/viz_img/{img_name}")
-
+    with st.spinner('Traitement...'):
+        time.sleep(5)
     plt.show()
 

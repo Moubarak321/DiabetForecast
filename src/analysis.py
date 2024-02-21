@@ -66,23 +66,13 @@ def show_protected_content():
             # st.write("", values)
 
             champs0 = st.sidebar.multiselect(
-                "Variables générales",
+                "Voir les analogies entre les varibales et le diabète",
                 ["Vue d'ensemble",
                  "IMC", 
                  "Pression artérielle(HighBP)",
                  "Cholestérol(HighChol)", 
-                 "Propension à la cigarette",
                  "Alcoolémie",
-                #  "Activité physique",
-                #  "Alimentation en fruits", 
-                #  "Alimentation en légumes",
-                #  "AVC",
-                #  "Infactus",
-                #  "Fréquence de consultation", 
-                # #  "Etat de santé",
-                # #  "Santé mentale", 
-                #  "Age",
-                #  "Sexe",
+               
                  ],
 
                 ["Vue d'ensemble"],
@@ -96,45 +86,7 @@ def show_protected_content():
                         "Caractéristiques sociaux"
                     ),
             )
-            # champs1 = st.sidebar.multiselect(
-            #     "Indicateurs liés à la santé du sujet",
-            #     [
-            #     "Test","zaazazazaz","Vue d'ensemble"
-            #      ],
-
-            #     ["Vue d'ensemble"],
-            # )
-
-            # champs2 = st.sidebar.multiselect(
-            #     "Indicateurs relatifs aux soins de santé",
-            #     [
-            #                     "Test","zaazazazaz","Vue d'ensemble"
-
-            #      ],
-
-            #     ["Vue d'ensemble"],
-            # )
-
-            # champs3 = st.sidebar.multiselect(
-            #     "Indicateurs relatifs au mode de vie du sujet",
-            #     [
-            #                     "Test","zaazazazaz","Vue d'ensemble"
-
-            #      ],
-
-            #     ["Vue d'ensemble"],
-            # )
-            # champs4 = st.sidebar.multiselect(
-            #     "Caractéristiques sociaux",
-            #     [
-            #                     "Test","zaazazazaz","Vue d'ensemble"
-
-            #      ],
-
-            #     ["Vue d'ensemble"],
-            # )
-
-
+           
            
            
             deconnexion = st.sidebar.button("Déconnexion")
@@ -148,11 +100,7 @@ def show_protected_content():
             data = importation_of_dataset(path)
             
 
-            # ================ Selectionnez un/des indicateurs ================
-            # if values:
-            #     splited_data = data.loc[
-            #         (data["Age"] >= values[0]) & (data["Age"] <= values[1])
-            #     ]
+           
             if values:
                 age_category_selected = []
                 for key, value in age_mapping.items():
@@ -209,77 +157,77 @@ def show_protected_content():
                         st.write("**Visualisations**")
                         st.pyplot(visualize_single_correlation("HvyAlcoholConsump",splited_data,"HvyAlcoholConsump.svg"))
                     
-                if "Activité physique" in champs0:
-                    st.subheader("**Corrélation entre le diabète et la fréquence d'activité physique(PhysActivity)**", divider='rainbow')
-                    # c1, c2, c3 = st.columns((2, 2, 2))
+                # if "Activité physique" in champs0:
+                #     st.subheader("**Corrélation entre le diabète et la fréquence d'activité physique(PhysActivity)**", divider='rainbow')
+                #     # c1, c2, c3 = st.columns((2, 2, 2))
 
-                    with st.container():
+                #     with st.container():
                         
-                        st.write("**Visualisations**")
-                        st.pyplot(visualize_single_correlation("PhysActivity",splited_data,"PhysActivity.svg"))
+                #         st.write("**Visualisations**")
+                #         st.pyplot(visualize_single_correlation("PhysActivity",splited_data,"PhysActivity.svg"))
 
-                if "Alimentation en fruits" in champs0:
-                    st.subheader("**Corrélation entre le diabète et la fréquence de consommation de fruits(Fruits)**", divider='rainbow')
-                    # c1, c2, c3 = st.columns((2, 2, 2))
+                # if "Alimentation en fruits" in champs0:
+                #     st.subheader("**Corrélation entre le diabète et la fréquence de consommation de fruits(Fruits)**", divider='rainbow')
+                #     # c1, c2, c3 = st.columns((2, 2, 2))
 
-                    with st.container():
+                #     with st.container():
                         
-                        st.write("**Visualisations**")
-                        st.pyplot(visualize_single_correlation("Fruits",splited_data,"Fruits.svg"))
+                #         st.write("**Visualisations**")
+                #         st.pyplot(visualize_single_correlation("Fruits",splited_data,"Fruits.svg"))
                                   
-                if "Alimentation en légumes" in champs0:
-                    st.subheader("**Corrélation entre le diabète et la fréquence de consommation de légumes(Veggies)**", divider='rainbow')
-                    # c1, c2, c3 = st.columns((2, 2, 2))
+                # if "Alimentation en légumes" in champs0:
+                #     st.subheader("**Corrélation entre le diabète et la fréquence de consommation de légumes(Veggies)**", divider='rainbow')
+                #     # c1, c2, c3 = st.columns((2, 2, 2))
 
-                    with st.container():
+                #     with st.container():
                         
-                        st.write("**Visualisations**")
-                        st.pyplot(visualize_single_correlation("Veggies",splited_data,"Veggies.svg"))
+                #         st.write("**Visualisations**")
+                #         st.pyplot(visualize_single_correlation("Veggies",splited_data,"Veggies.svg"))
               
-                if "AVC" in champs0:
-                    st.subheader("**Corrélation entre le diabète et la fréquence d'accidents cardio-vasculaires(Stroke)**", divider='rainbow')
-                    # c1, c2, c3 = st.columns((2, 2, 2))
+                # if "AVC" in champs0:
+                #     st.subheader("**Corrélation entre le diabète et la fréquence d'accidents cardio-vasculaires(Stroke)**", divider='rainbow')
+                #     # c1, c2, c3 = st.columns((2, 2, 2))
 
-                    with st.container():
+                #     with st.container():
                         
-                        st.write("**Visualisations**")
-                        st.pyplot(visualize_single_correlation("Stroke",splited_data,"Stroke.svg"))
+                #         st.write("**Visualisations**")
+                #         st.pyplot(visualize_single_correlation("Stroke",splited_data,"Stroke.svg"))
 
-                if "Infactus" in champs0:
-                    st.subheader("**Corrélation entre le diabète et la fréquence d'infarctus(HeartDiseaseorAttack)**", divider='rainbow')
-                    # c1, c2, c3 = st.columns((2, 2, 2))
+                # if "Infactus" in champs0:
+                #     st.subheader("**Corrélation entre le diabète et la fréquence d'infarctus(HeartDiseaseorAttack)**", divider='rainbow')
+                #     # c1, c2, c3 = st.columns((2, 2, 2))
 
-                    with st.container():
+                #     with st.container():
                         
-                        st.write("**Visualisations**")
-                        st.pyplot(visualize_single_correlation("HeartDiseaseorAttack",splited_data,"HeartDiseaseorAttack.svg"))
+                #         st.write("**Visualisations**")
+                #         st.pyplot(visualize_single_correlation("HeartDiseaseorAttack",splited_data,"HeartDiseaseorAttack.svg"))
                
-                if "Fréquence de consultation" in champs0:
-                    st.subheader("**Corrélation entre le diabète et la Fréquence de consultation médicale(NoDocbcCost)**", divider='rainbow')
-                    # c1, c2, c3 = st.columns((2, 2, 2))
+                # if "Fréquence de consultation" in champs0:
+                #     st.subheader("**Corrélation entre le diabète et la Fréquence de consultation médicale(NoDocbcCost)**", divider='rainbow')
+                #     # c1, c2, c3 = st.columns((2, 2, 2))
 
-                    with st.container():
+                #     with st.container():
                         
-                        st.write("**Visualisations**")
-                        st.pyplot(visualize_single_correlation("NoDocbcCost",splited_data,"NoDocbcCost.svg"))
+                #         st.write("**Visualisations**")
+                #         st.pyplot(visualize_single_correlation("NoDocbcCost",splited_data,"NoDocbcCost.svg"))
               
-                if "Age" in champs0:
-                    st.subheader("**Corrélation entre le diabète et l'age'**", divider='rainbow')
-                    # c1, c2, c3 = st.columns((2, 2, 2))
+                # if "Age" in champs0:
+                #     st.subheader("**Corrélation entre le diabète et l'age'**", divider='rainbow')
+                #     # c1, c2, c3 = st.columns((2, 2, 2))
 
-                    with st.container():
+                #     with st.container():
                         
-                        st.write("**Visualisations**")
-                        st.pyplot(visualize_single_correlation("Age",splited_data,"Age.svg"))
+                #         st.write("**Visualisations**")
+                #         st.pyplot(visualize_single_correlation("Age",splited_data,"Age.svg"))
                           
-                if "Sexe" in champs0:
-                    st.subheader("**Corrélation entre le diabète et le sexe du sujet**", divider='rainbow')
-                    # c1, c2, c3 = st.columns((2, 2, 2))
+                # if "Sexe" in champs0:
+                #     st.subheader("**Corrélation entre le diabète et le sexe du sujet**", divider='rainbow')
+                #     # c1, c2, c3 = st.columns((2, 2, 2))
 
-                    with st.container():
+                #     with st.container():
                         
-                        st.write("**Visualisations**")
-                        st.pyplot(visualize_single_correlation("Sex",splited_data,"Sex.svg"))
+                #         st.write("**Visualisations**")
+                #         st.pyplot(visualize_single_correlation("Sex",splited_data,"Sex.svg"))
 
                 
 
