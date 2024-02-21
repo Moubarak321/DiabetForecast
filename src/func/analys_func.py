@@ -1,5 +1,4 @@
 import streamlit as st 
-
 @st.cache_resource(experimental_allow_widgets=True)
 def importation_of_dataset(path):
     import pandas as pd
@@ -82,7 +81,6 @@ def importation_of_dataset(path):
 #     # st.image(img_name)
 
 #     plt.show()
-
 def visualize_single_correlation(feature_name, df, img_name):
     import seaborn as sns
     import matplotlib.pyplot as plt
@@ -159,7 +157,6 @@ def visualize_corr(df):
     # plt.savefig('correlation_plot.png')
 
     plt.show()  # Affichez le graphique
-
 
 def histplot(df,feature, img_name):
     import seaborn as sns

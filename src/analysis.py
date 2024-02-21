@@ -93,7 +93,6 @@ def show_protected_content():
                     "**Variables secondaires**",
                     ("", "Indicateurs liés à la santé du sujet", 
                         "Indicateurs relatifs au mode de vie du sujet", 
-                        "Indicateurs relatifs aux soins de santé",
                         "Caractéristiques sociaux"
                     ),
             )
@@ -363,6 +362,29 @@ def show_protected_content():
                             )
                             st.pyplot(visualize_single_correlation("Fruits",splited_data,"Fruits.svg"))
 
+                if var_secondaires =="Caractéristiques sociaux":
+                    st.subheader("**Caractéristiques sociaux**", divider='rainbow')
+                    choix_mode_de_vie= st.multiselect(
+                        "Selectionnez un/des paramètres",
+                        [ "Age", "Sexe"],
+                        ["Age"],
+                    )
+
+                    if "Age" in choix_mode_de_vie:
+                        with st.container():
+                            st.info(
+                                "**Distribution des sujets selon leur âge**"
+                            )
+                            st.pyplot(visualize_single_correlation("Age",splited_data,"Age.svg"))
+                    
+                    if "Sexe" in choix_mode_de_vie:
+                        with st.container():
+                            st.info(
+                                "**Distribution des sujets selon leur genre**"
+                            )
+                            st.pyplot(visualize_single_correlation("Sex",splited_data,"Sex.svg"))
+                    
+                    
                     
 
 
