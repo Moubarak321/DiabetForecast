@@ -333,7 +333,36 @@ def show_protected_content():
                             )
                             st.pyplot(visualize_single_correlation("GenHlth",splited_data,"GenHlth.svg"))
 
-               
+                if var_secondaires =="Indicateurs relatifs au mode de vie du sujet":
+                    st.subheader("**Indicateurs relatifs au mode de vie du sujet**")
+                    choix_mode_de_vie= st.multiselect(
+                        "Selectionnez un/des paramètres",
+                        [ "Activité physique(PhysActivity)", "Alimentation en légumes(Veggies)", "Alimentation en fruits(Fruits)"],
+                        ["Activité physique(PhysActivity)"],
+                    )
+
+                    if "Activité physique(PhysActivity)" in choix_mode_de_vie:
+                        with st.container():
+                            st.info(
+                                "**Distribution des sujets selon leur fréquence d'activité physique**"
+                            )
+                            st.pyplot(visualize_single_correlation("PhysActivity",splited_data,"PhysActivity.svg"))
+                    
+                    if "Alimentation en légumes(Veggies)" in choix_mode_de_vie:
+                        with st.container():
+                            st.markdown(
+                                "**Distribution des sujets selon leur fréquence d'activité physique**"
+                            )
+                            st.pyplot(visualize_single_correlation("Veggies",splited_data,"Veggies.svg"))
+                    
+                    if "Alimentation en fruits(Fruits)" in choix_mode_de_vie:
+                        with st.container():
+                            st.markdown(
+                                "**Distribution des sujets selon leur fréquence d'activité physique**"
+                            )
+                            st.pyplot(visualize_single_correlation("Fruits",splited_data,"Fruits.svg"))
+
+                    
 
 
 
