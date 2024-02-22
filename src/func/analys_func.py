@@ -190,3 +190,25 @@ def histplot(df,feature, img_name):
         time.sleep(5)
     plt.show()
 
+
+
+def pearson_corr(df):
+    import pandas as pd
+    import seaborn as  sns 
+    import matplotlib.pyplot as plt 
+    pearson_corr = df.drop("Diabetes_binary", axis =1).corrwith(df["Diabetes_binary"]).abs()
+    sort_pearson_corr = pearson_corr.sort_values(ascending=False)
+    sort_pearson_corr_df = pd.DataFrame({"Column": sort_pearson_corr.index, "Correlation":sort_pearson_corr.values})
+    # Tri à partir de values >0.05
+    sort_pearson_corr_df = sort_pearson_corr_df[sort_pearson_corr_df.Correlation > 0.05]
+
+    plt.figure(figsize=(6,6))
+    sns.barplot(x="Correlation", y="Column", data=sort_pearson_corr_df, palette='viridis')
+
+    plt.xlabel("indice de corrélation")
+    plt.ylabel("Indicateurs cliniques")
+    plt.title("Matrice de corrélation entre les indicateurs cliniques du diabète")
+
+    plt.tight_layout()
+    plt.show
+

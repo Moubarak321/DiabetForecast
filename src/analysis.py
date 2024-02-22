@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import time
 import pyrebase
-from src.func.analys_func import importation_of_dataset, visualize_corr,visualize_single_correlation,histplot
+from src.func.analys_func import importation_of_dataset, pearson_corr,visualize_single_correlation,histplot
 #  diabetics, scatter, histplot, densite,
 
 
@@ -83,7 +83,8 @@ def show_protected_content():
                     "**Variables secondaires**",
                     ("", "Indicateurs liés à la santé du sujet", 
                         "Indicateurs relatifs au mode de vie du sujet", 
-                        "Caractéristiques sociaux"
+                        "Caractéristiques sociaux",
+                        # "Matrice de corrélation"
                     ),
             )
            
@@ -113,13 +114,17 @@ def show_protected_content():
                
                 if "Vue d'ensemble" in champs0:
                     # st.subheader("**Corrélation entre tous les paramètres**")
-                    st.subheader('Corrélation entre tous les paramètres', divider='rainbow')
+                    # st.subheader('Corrélation entre tous les paramètres', divider='rainbow')
+                    st.subheader("**Matrice de corrélation**", divider='rainbow')
+                    st.info(
+                                "**Analyse de corrélation entre les variables cliniques et le diabète : une exploration du coefficient de corrélation de Pearson**"
+                            )
                     # c1, c2, c3 = st.columns((2, 2, 2))
 
                     with st.container():
                         
                         st.write("**Visualisations**")
-                        st.pyplot(visualize_corr(splited_data))
+                        st.pyplot(pearson_corr(data))
                         
                 if "Pression artérielle(HighBP)" in champs0:
                     st.subheader("**Corrélation entre le diabète et la pression artérielle (HighBP)**", divider='rainbow')
@@ -331,6 +336,32 @@ def show_protected_content():
                                 "**Distribution des sujets selon leur genre**"
                             )
                             st.pyplot(visualize_single_correlation("Sex",splited_data,"Sex.svg"))
+
+                
+                # if var_secondaires =="Matrice de corrélation":
+                #     st.subheader("**Matrice de corrélation**", divider='rainbow')
+                #     st.info(
+                #                 "**Analyse de corrélation entre les variables cliniques et le diabète : une exploration du coefficient de corrélation de Pearson**"
+                #             )
+                    # choix_mode_de_vie= st.multiselect(
+                    #     "Selectionnez un/des paramètres",
+                    #     [ "Age", "Sexe"],
+                    #     ["Age"],
+                    # )
+
+                    # if "Age" in choix_mode_de_vie:
+                    #     with st.container():
+                    #         st.info(
+                    #             "**Distribution des sujets selon leur âge**"
+                    #         )
+                    #         st.pyplot(visualize_single_correlation("Age",splited_data,"Age.svg"))
+                    
+                    # if "Sexe" in choix_mode_de_vie:
+                    #     with st.container():
+                    #         st.info(
+                    #             "**Distribution des sujets selon leur genre**"
+                    #         )
+                    #         st.pyplot(visualize_single_correlation("Sex",splited_data,"Sex.svg"))
                     
                     
                     
