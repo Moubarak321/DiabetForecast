@@ -72,6 +72,6 @@ elif menu == "Analyses":
     analysis.data_viz()
 
 elif menu == "Prévisions":
-    forecast.coming_soon()
+    forecast.main()
 
 
