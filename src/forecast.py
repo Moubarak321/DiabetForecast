@@ -217,30 +217,30 @@ def main():
 #    list(age_mapping.keys()), index=0,
 #    placeholder="Select contact method...",
 # )
-        age = st.selectbox("👉Entrez votre âge", list(age_mapping.keys()), index=None,placeholder="Select contact method...",)
+        age = st.selectbox("👉Entrez votre âge", list(age_mapping.keys()), index=None,placeholder="Selectionnez votre tranche d'âge",)
         age = age_mapping[age] if age else ""
-        BMI = int(st.number_input("👉Entrez votre indice de masse corporelle", placeholder="Indice de masse corporelle", key="c"))
-        chol = st.selectbox("Avez-vous un taux de cholestérol élevé ?", list(yes_or_no.keys()), index=None)
+        BMI = int(st.number_input("👉Entrez votre indice de masse corporelle", placeholder="Entrez votre IMC", key="c"))
+        chol = st.selectbox("Avez-vous un taux de cholestérol élevé ?", list(yes_or_no.keys()), index=None,placeholder="Sélectionnez une option")
         HighChol = yes_or_no[chol] if chol else ""
 
-    veggie = st.selectbox("👉Consommez-vous des légumes quotidiennement ?", list(yes_or_no.keys()), index=None ,placeholder="Select contact method...",)
+    veggie = st.selectbox("👉Consommez-vous des légumes quotidiennement ?", list(yes_or_no.keys()), index=None ,placeholder="Sélectionnez une option",)
     Veggie = yes_or_no[veggie] if veggie else ""
 
     with col2:
-        sexe = st.selectbox("👉Quel est votre genre", list(genre.keys()), index=None, key="b")
+        sexe = st.selectbox("👉Quel est votre genre", list(genre.keys()), index=None, key="b",placeholder="Sélectionnez une option")
         Sexe = genre[sexe] if sexe else ""
 
-        highbp = st.selectbox("👉Ëtes-vous hypertendus ?", list(ans.keys()), index=None, key="skjdn")
+        highbp = st.selectbox("👉Ëtes-vous hypertendus ?", list(ans.keys()), index=None, key="skjdn",placeholder="Sélectionnez une option")
         Highbp = ans[highbp] if highbp else ""
 
-        fruit = st.selectbox("👉Consommez-vous au moins un fruit par jour ?", list(yes_or_no.keys()), index=None, key="skjv")
+        fruit = st.selectbox("👉Consommez-vous au moins un fruit par jour ?", list(yes_or_no.keys()), index=None, key="skjv",placeholder="Sélectionnez une option")
         Fruit = yes_or_no[fruit] if fruit else ""
 
-    Genhlth = st.selectbox("👉Quelle note sur 5 donneriez-vous à votre état de santé général ?", [""] + list(range(1, 6)),index=None, key="skssjv")
-    PhysHlth = st.selectbox("👉Pendant combien de jours au cours des 30 derniers jours votre santé physique n'a-t-elle pas été bonne ?", [""] + list(range(1, 31)),index=None, placeholder="Âge", key="dddddg")
-    MentHlth = st.selectbox("👉Pensez maintenant à votre santé mentale, qui comprend le stress, la dépression et les problèmes émotionnels, pendant combien de jours au cours des 30 derniers jours votre santé mentale n'a-t-elle pas été bonne. ?", [""] + list(range(1, 31)),index=None, placeholder="Âge", key="eeeeeg")
+    Genhlth = st.selectbox("👉Quelle note sur 5 donneriez-vous à votre état de santé général ?", [""] + list(range(1, 6)),index=None, key="skssjv",placeholder="Sélectionnez une option")
+    PhysHlth = st.selectbox("👉Pendant combien de jours au cours des 30 derniers jours votre santé physique n'a-t-elle pas été bonne ?", [""] + list(range(1, 31)),index=None,placeholder="Sélectionnez une option", key="dddddg")
+    MentHlth = st.selectbox("👉Pensez maintenant à votre santé mentale, qui comprend le stress, la dépression et les problèmes émotionnels, pendant combien de jours au cours des 30 derniers jours votre santé mentale n'a-t-elle pas été bonne. ?", [""] + list(range(1, 31)),index=None, placeholder="Sélectionnez une option", key="eeeeeg")
 
-    smoke = st.selectbox("👉Avez-vous fumé au moins 100 cigarettes (05 paquets) au cours de votre vie ?", list(yes_or_no.keys()), index=None, key="h")
+    smoke = st.selectbox("👉Avez-vous fumé au moins 100 cigarettes (05 paquets) au cours de votre vie ?", list(yes_or_no.keys()), index=None, key="h",placeholder="Sélectionnez une option")
     Smoke = yes_or_no[smoke] if smoke else ""
 
     if st.button("Soumettre"):
