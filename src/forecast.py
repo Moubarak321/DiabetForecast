@@ -268,3 +268,6 @@ def main():
                 
         else:
             st.error("Veuillez remplir tous les champs obligatoires.")
+
+
+# HighBP	HighChol	BMI	Smoker	Fruits	GenHlth	MentHlth	PhysHlth	DiffWalk	Sex	Age
