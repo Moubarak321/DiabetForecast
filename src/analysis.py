@@ -162,83 +162,6 @@ def show_protected_content():
                         st.write("**Visualisations**")
                         st.pyplot(visualize_single_correlation("HvyAlcoholConsump",splited_data,"HvyAlcoholConsump.svg"))
                     
-                # if "Activité physique" in champs0:
-                #     st.subheader("**Corrélation entre le diabète et la fréquence d'activité physique(PhysActivity)**", divider='rainbow')
-                #     # c1, c2, c3 = st.columns((2, 2, 2))
-
-                #     with st.container():
-                        
-                #         st.write("**Visualisations**")
-                #         st.pyplot(visualize_single_correlation("PhysActivity",splited_data,"PhysActivity.svg"))
-
-                # if "Alimentation en fruits" in champs0:
-                #     st.subheader("**Corrélation entre le diabète et la fréquence de consommation de fruits(Fruits)**", divider='rainbow')
-                #     # c1, c2, c3 = st.columns((2, 2, 2))
-
-                #     with st.container():
-                        
-                #         st.write("**Visualisations**")
-                #         st.pyplot(visualize_single_correlation("Fruits",splited_data,"Fruits.svg"))
-                                  
-                # if "Alimentation en légumes" in champs0:
-                #     st.subheader("**Corrélation entre le diabète et la fréquence de consommation de légumes(Veggies)**", divider='rainbow')
-                #     # c1, c2, c3 = st.columns((2, 2, 2))
-
-                #     with st.container():
-                        
-                #         st.write("**Visualisations**")
-                #         st.pyplot(visualize_single_correlation("Veggies",splited_data,"Veggies.svg"))
-              
-                # if "AVC" in champs0:
-                #     st.subheader("**Corrélation entre le diabète et la fréquence d'accidents cardio-vasculaires(Stroke)**", divider='rainbow')
-                #     # c1, c2, c3 = st.columns((2, 2, 2))
-
-                #     with st.container():
-                        
-                #         st.write("**Visualisations**")
-                #         st.pyplot(visualize_single_correlation("Stroke",splited_data,"Stroke.svg"))
-
-                # if "Infactus" in champs0:
-                #     st.subheader("**Corrélation entre le diabète et la fréquence d'infarctus(HeartDiseaseorAttack)**", divider='rainbow')
-                #     # c1, c2, c3 = st.columns((2, 2, 2))
-
-                #     with st.container():
-                        
-                #         st.write("**Visualisations**")
-                #         st.pyplot(visualize_single_correlation("HeartDiseaseorAttack",splited_data,"HeartDiseaseorAttack.svg"))
-               
-                # if "Fréquence de consultation" in champs0:
-                #     st.subheader("**Corrélation entre le diabète et la Fréquence de consultation médicale(NoDocbcCost)**", divider='rainbow')
-                #     # c1, c2, c3 = st.columns((2, 2, 2))
-
-                #     with st.container():
-                        
-                #         st.write("**Visualisations**")
-                #         st.pyplot(visualize_single_correlation("NoDocbcCost",splited_data,"NoDocbcCost.svg"))
-              
-                # if "Age" in champs0:
-                #     st.subheader("**Corrélation entre le diabète et l'age'**", divider='rainbow')
-                #     # c1, c2, c3 = st.columns((2, 2, 2))
-
-                #     with st.container():
-                        
-                #         st.write("**Visualisations**")
-                #         st.pyplot(visualize_single_correlation("Age",splited_data,"Age.svg"))
-                          
-                # if "Sexe" in champs0:
-                #     st.subheader("**Corrélation entre le diabète et le sexe du sujet**", divider='rainbow')
-                #     # c1, c2, c3 = st.columns((2, 2, 2))
-
-                #     with st.container():
-                        
-                #         st.write("**Visualisations**")
-                #         st.pyplot(visualize_single_correlation("Sex",splited_data,"Sex.svg"))
-
-                
-
-                # ==============================================================
-                # debut var secondaire
-                # ==============================================================
                 
                 if var_secondaires == "Indicateurs liés à la santé du sujet":
                     st.subheader("**Indicateurs liés à la santé du sujet**", divider='rainbow')
@@ -337,34 +260,7 @@ def show_protected_content():
                             )
                             st.pyplot(visualize_single_correlation("Sex",splited_data,"Sex.svg"))
 
-                
-                # if var_secondaires =="Matrice de corrélation":
-                #     st.subheader("**Matrice de corrélation**", divider='rainbow')
-                #     st.info(
-                #                 "**Analyse de corrélation entre les variables cliniques et le diabète : une exploration du coefficient de corrélation de Pearson**"
-                #             )
-                    # choix_mode_de_vie= st.multiselect(
-                    #     "Selectionnez un/des paramètres",
-                    #     [ "Age", "Sexe"],
-                    #     ["Age"],
-                    # )
-
-                    # if "Age" in choix_mode_de_vie:
-                    #     with st.container():
-                    #         st.info(
-                    #             "**Distribution des sujets selon leur âge**"
-                    #         )
-                    #         st.pyplot(visualize_single_correlation("Age",splited_data,"Age.svg"))
-                    
-                    # if "Sexe" in choix_mode_de_vie:
-                    #     with st.container():
-                    #         st.info(
-                    #             "**Distribution des sujets selon leur genre**"
-                    #         )
-                    #         st.pyplot(visualize_single_correlation("Sex",splited_data,"Sex.svg"))
-                    
-                    
-                    
+              
 
 
 
