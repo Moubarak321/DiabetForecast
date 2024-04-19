@@ -5,7 +5,7 @@ import numpy as np
 import streamlit as st
 import pickle
 from sklearn.ensemble import GradientBoostingClassifier
-
+import pandas as pd
 age = None
 BMI = None
 HighChol = None
@@ -123,12 +123,18 @@ def main():
                     
             with col2:
                 if st.form_submit_button("Soumettre", args="section3_submit"):
+                    Highbp = int(Highbp)
+                    HighChol = int(HighChol)
+                    BMI = int(BMI)
+                    Smoke = int(Smoke)
+                    Fruit = int(Fruit)
+                    Genhlth = int(Genhlth)
+                    MentHlth = int(MentHlth)
+                    PhysHlth = int(PhysHlth)
+                    Diff = int(Diff)
+                    Sexe = int(Sexe)
+                    age = int(age)
                     features = [Highbp,HighChol,BMI,Smoke,Fruit,Genhlth,MentHlth,PhysHlth,Diff,Sexe,age]
-                    
-                    # Convertir la liste features en un tableau 2D
-                    # HighBP	HighChol	BMI	Smoker	Fruits	GenHlth	MentHlth	PhysHlth	DiffWalk	Sex	Age
-                    # st.write(features)
-
                     features = np.array(features).reshape(1, -1)
                     with open('new_GradientBoostingClassifier_boost.pkl', 'rb') as best_gradient_boost:
                         modele_charge = pickle.load(best_gradient_boost)
@@ -140,8 +146,19 @@ def main():
                         print(features)
                     # st.success("Vos données ont été enregistrées avec succès.")
 
+
+            # Enregistrement des informations dans un fichier CSV
+            feature_names = ["HighBP", "HighChol", "BMI", "Smoke", "Fruit", "GenHlth", "MentHlth", "PhysHlth", "DiffWalk", "Sex", "Age"]
+            df = pd.DataFrame(features, columns=feature_names)
+            # Ouverture du fichier CSV en mode append
+            with open("etat_de_sante_de_la_population.csv", mode='a', newline='') as file:
+                df.to_csv(file, header=file.tell()==0, index=False)  # Append les données, sans écrire l'en-tête si le fichier existe déjà
 if __name__ == "__main__":
     main()
 
 
 
+ 
+                    # Convertir la liste features en un tableau 2D
+                    # HighBP	HighChol	BMI	Smoker	Fruits	GenHlth	MentHlth	PhysHlth	DiffWalk	Sex	Age
+                    # st.write(features)

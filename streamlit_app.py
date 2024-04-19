@@ -59,11 +59,11 @@ def accueil():
 st.markdown(f'<div class="image-container"><img src="{chemin_image}" alt="Ma superbe image"></div>', unsafe_allow_html=True)
 
 
-menu = option_menu(None, ["Accueil", "Analyses", "Prévisions" ] ,
+menu = option_menu(None, ["Abstract", "Analyses", "Prévisions" ] ,
                 icons=['house', 'bar-chart-fill',  'lightbulb'], 
                 menu_icon="cast", default_index=0, orientation="horizontal")
 
-if menu == "Accueil":
+if menu == "Abstract":
     # st.image(f"images/{get_random_img(['diabetes1', 'diabetes2', 'diabetes3', 'diabetes4'])}.jpg")
     accueil()
 
