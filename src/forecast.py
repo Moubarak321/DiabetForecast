@@ -122,29 +122,30 @@ def main():
                     return
                     
             with col2:
-                if st.form_submit_button("Soumettre", args="section3_submit"):
-                    Highbp = int(Highbp)
-                    HighChol = int(HighChol)
-                    BMI = int(BMI)
-                    Smoke = int(Smoke)
-                    Fruit = int(Fruit)
-                    Genhlth = int(Genhlth)
-                    MentHlth = int(MentHlth)
-                    PhysHlth = int(PhysHlth)
-                    Diff = int(Diff)
-                    Sexe = int(Sexe)
-                    age = int(age)
-                    features = [Highbp,HighChol,BMI,Smoke,Fruit,Genhlth,MentHlth,PhysHlth,Diff,Sexe,age]
-                    features = np.array(features).reshape(1, -1)
-                    with open('new_GradientBoostingClassifier_boost.pkl', 'rb') as best_gradient_boost:
-                        modele_charge = pickle.load(best_gradient_boost)
-                        prediction = modele_charge.predict(features)
-                        if prediction ==1:
-                            st.error("Vous êtes susceptible d'être diabétique. Maintenez une activité sportive régulière, mangez beaucoup de fruits et legumes et surtout, consultez un spécialiste pour un examen plus approfondi ", icon="🚨")
-                        else:
-                            st.info("Vous ne présentez pas de risque d'être diabétique. Néanmoins, controlez vôtre alimentation, faites du sport et prévoyez une consultation auprès d'un spécialiste dans les jours à venir")
+                bt = st.form_submit_button("Soumettre", args="section3_submit")
+            if bt:
+                Highbp = int(Highbp)
+                HighChol = int(HighChol)
+                BMI = int(BMI)
+                Smoke = int(Smoke)
+                Fruit = int(Fruit)
+                Genhlth = int(Genhlth)
+                MentHlth = int(MentHlth)
+                PhysHlth = int(PhysHlth)
+                Diff = int(Diff)
+                Sexe = int(Sexe)
+                age = int(age)
+                features = [Highbp,HighChol,BMI,Smoke,Fruit,Genhlth,MentHlth,PhysHlth,Diff,Sexe,age]
+                features = np.array(features).reshape(1, -1)
+                with open('new_GradientBoostingClassifier_boost.pkl', 'rb') as best_gradient_boost:
+                    modele_charge = pickle.load(best_gradient_boost)
+                    prediction = modele_charge.predict(features)
+                    if prediction ==1:
+                        st.error("Vous êtes susceptible d'être diabétique. Maintenez une activité sportive régulière, mangez beaucoup de fruits et legumes et surtout, consultez un spécialiste pour un examen plus approfondi ", icon="🚨")
+                    else:
+                        st.info("Vous ne présentez pas de risque d'être diabétique. Néanmoins, controlez vôtre alimentation, faites du sport et prévoyez une consultation auprès d'un spécialiste dans les jours à venir")
                         print(features)
-                    # st.success("Vos données ont été enregistrées avec succès.")
+                            # st.success("Vos données ont été enregistrées avec succès.")
 
 
             # Enregistrement des informations dans un fichier CSV
