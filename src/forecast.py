@@ -140,9 +140,9 @@ def main():
                         modele_charge = pickle.load(best_gradient_boost)
                         prediction = modele_charge.predict(features)
                         if prediction ==1:
-                            st.error("Vous êtes susceptible d'/être diabétique. Maintenez une activité sportive régulière, mangez beaucoup de fruits et legumes et surtout, consultez un spécialiste pour un examen plus approfondi ", icon="🚨")
+                            st.error("Vous êtes susceptible d'être diabétique. Maintenez une activité sportive régulière, mangez beaucoup de fruits et legumes et surtout, consultez un spécialiste pour un examen plus approfondi ", icon="🚨")
                         else:
-                            st.info("Vous ne présentez pas de risque d'/être diabétique. Néanmoins, controlez vôtre alimentation, faites du sport et prévoyez une consultation auprès d'un spécialiste dans les jours à venir")
+                            st.info("Vous ne présentez pas de risque d'être diabétique. Néanmoins, controlez vôtre alimentation, faites du sport et prévoyez une consultation auprès d'un spécialiste dans les jours à venir")
                         print(features)
                     # st.success("Vos données ont été enregistrées avec succès.")
 
