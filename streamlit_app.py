@@ -42,18 +42,7 @@ En fournissant une interface détaillée et conviviale, DiabetForecast facilite 
 
 """
 
-english = """
-DiabetForecast is an innovative solution designed to assess the risk of type 2 diabetes (T2D) by leveraging advanced artificial intelligence (AI) and machine learning techniques. This tool aims to address the limitations of traditional risk assessment methods, such as the Finnish Diabetes Risk Score (FINDRISC), by offering a more comprehensive, personalized, and adaptive approach.
 
-DiabetForecast integrates a wide array of data, including demographic, medical, and lifestyle factors, to develop precise predictive models. Unlike FINDRISC, which is based on eight standard parameters, DiabetForecast considers the complex interactions among various risk factors, providing a nuanced analysis of an individual's health status. This system evaluates subjective health assessments and tailors predictions to the unique characteristics of each user, enhancing the accuracy and relevance of its risk assessments.
-
-Additionally, DiabetForecast features two main components:
-
-Health Analysis Dashboard: This component visualizes population health trends, displaying graphs and metrics that reflect the overall health status of a community. It helps public health officials and policymakers to monitor and address health issues proactively.
-Risk Evaluation Module: This module conducts a detailed risk assessment for individuals, offering objective evaluations of their general health. By identifying high-risk individuals, DiabetForecast enables early intervention and targeted prevention strategies, ultimately aiming to reduce the incidence of T2D.
-By providing a detailed and user-friendly interface, DiabetForecast not only facilitates better health management for individuals but also supports healthcare providers in making informed decisions. The implementation of DiabetForecast could significantly improve the detection and prevention of T2D, particularly in diverse and low-resource settings, making it an essential tool in the global fight against diabetes.
-
-"""
 st.markdown(style, unsafe_allow_html=True)
 
 chemin_image = "https://github.com/Moubarak321/DiabetForecast/blob/main/images/dia1.png?raw=true"
