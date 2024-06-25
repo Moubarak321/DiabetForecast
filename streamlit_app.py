@@ -79,7 +79,7 @@ elif menu == "Prévisions":
 
 
 elif menu == "Analyses":
-    analysis.data_viz()
+    analysis.main()
 
 
 
