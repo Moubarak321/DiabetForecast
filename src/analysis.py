@@ -34,10 +34,16 @@ def show_protected_content():
     st.sidebar.header("Paramètres de visualisation des analogies")
     values = st.slider("Sélectionnez la tranche d'âge :", min_value=18, max_value=80, value=(18, 80))
 
-    champs0 = st.sidebar.multiselect(
+    # champs0 = st.sidebar.selectbox(
+    #     "Voir les analogies entre les variables et le diabète",
+    #     ("","Vue d'ensemble", "IMC", "Pression artérielle(HighBP)", "Cholestérol(HighChol)", "Alcoolémie"),
+    #     index=0,  format_func=lambda x: "Sélectionnez une variable" if x == "" else x
+        
+    # )
+    champs0 = st.sidebar.selectbox(
         "Voir les analogies entre les variables et le diabète",
-        ["Vue d'ensemble", "IMC", "Pression artérielle(HighBP)", "Cholestérol(HighChol)", "Alcoolémie"],
-        ["IMC"]
+        ("Vue d'ensemble", "IMC", "Pression artérielle(HighBP)", "Cholestérol(HighChol)", "Alcoolémie","Effacer",),
+        
     )
 
     with st.sidebar.expander("**Paramètres avancés**"):
@@ -62,6 +68,9 @@ def show_protected_content():
                 age_category_selected.append(value)
 
         splited_data = data[data["Age"].isin(age_category_selected)]
+
+        # if champs0 == "Selectionnez une variable":
+        #     st.info("**Veuillez sélectionner une variable dans le menu déroulant pour afficher les graphiques correspondants.**")
 
         if "Vue d'ensemble" in champs0:
             st.subheader("**Matrice de corrélation**", divider='rainbow')
@@ -88,13 +97,22 @@ def show_protected_content():
             st.subheader("**Corrélation entre le diabète et la dépendance à l'alcool(HvyAlcoholConsump)**", divider='rainbow')
             st.write("**Visualisations**")
             st.write(visualize_single_correlation("HvyAlcoholConsump", splited_data, "HvyAlcoholConsump.svg"))
+        if None:
+            st.write('ddd')
+        
+            
 
         if var_secondaires == "Indicateurs liés à la santé du sujet":
             st.subheader("**Indicateurs liés à la santé du sujet**", divider='rainbow')
-            choix_sante_sujet = st.multiselect(
+            # choix_sante_sujet = st.multiselect(
+            #     "Selectionnez un/des paramètres",
+            #     ["Santé mentale(MentHlth)", "Difficultés motrices(DiffWalk)", "AVC(Stroke)", "Infarctus|Maladies du coeur", "Etat de santé général"],
+            #     ["Difficultés motrices(DiffWalk)"]
+            # )
+            choix_sante_sujet = st.selectbox(
                 "Selectionnez un/des paramètres",
-                ["Santé mentale(MentHlth)", "Difficultés motrices(DiffWalk)", "AVC(Stroke)", "Infarctus|Maladies du coeur", "Etat de santé général"],
-                ["Difficultés motrices(DiffWalk)"]
+                ("Santé mentale(MentHlth)", "Difficultés motrices(DiffWalk)", "AVC(Stroke)", "Infarctus|Maladies du coeur", "Etat de santé général"),
+                
             )
 
             if "Difficultés motrices(DiffWalk)" in choix_sante_sujet:
@@ -119,10 +137,15 @@ def show_protected_content():
 
         if var_secondaires == "Indicateurs relatifs au mode de vie du sujet":
             st.subheader("**Indicateurs relatifs au mode de vie du sujet**", divider='rainbow')
+            # choix_mode_de_vie = st.multiselect(
+            #     "Selectionnez un/des paramètres",
+            #     ["Activité physique(PhysActivity)", "Alimentation en légumes(Veggies)", "Alimentation en fruits(Fruits)"],
+            #     ["Activité physique(PhysActivity)"]
+            # )
             choix_mode_de_vie = st.multiselect(
                 "Selectionnez un/des paramètres",
-                ["Activité physique(PhysActivity)", "Alimentation en légumes(Veggies)", "Alimentation en fruits(Fruits)"],
-                ["Activité physique(PhysActivity)"]
+                ("Activité physique(PhysActivity)", "Alimentation en légumes(Veggies)", "Alimentation en fruits(Fruits)"),
+                
             )
 
             if "Activité physique(PhysActivity)" in choix_mode_de_vie:
@@ -139,10 +162,14 @@ def show_protected_content():
 
         if var_secondaires == "Caractéristiques sociaux":
             st.subheader("**Caractéristiques sociaux**", divider='rainbow')
+            # choix_caracteristiques_sociaux = st.multiselect(
+            #     "Selectionnez un/des paramètres",
+            #     ["Age", "Sexe"],
+            #     ["Age"]
+            # )
             choix_caracteristiques_sociaux = st.multiselect(
                 "Selectionnez un/des paramètres",
-                ["Age", "Sexe"],
-                ["Age"]
+                ("Age", "Sexe"),
             )
 
             if "Age" in choix_caracteristiques_sociaux:
@@ -152,7 +179,7 @@ def show_protected_content():
             if "Sexe" in choix_caracteristiques_sociaux:
                 st.info("**Distribution des sujets selon leur genre**")
                 st.write(visualize_single_correlation("Sex", splited_data, "Sex.svg"))
-
+    
 
 def login(email, password):       
     submit = st.sidebar.button("Connexion")
