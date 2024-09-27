@@ -28,7 +28,7 @@ content = {
         "section1": "Section 1: Informations générales",
         "age_prompt": "👉Entrez votre âge",
         "bmi_prompt": "👉Entrez votre indice de masse corporelle",
-        "chol_prompt": "Avez-vous un taux de cholestérol élevé ?",
+        "chol_prompt": "👉Consommez-vous régulièrement les fast et street food ?",
         "suivant": "Suivant",
         "section2": "Section 2: Habitudes de vie",
         "sexe_prompt": "👉Quel est votre genre",
@@ -40,7 +40,7 @@ content = {
         "genhlth_prompt": "👉Quelle note sur 5 donneriez-vous à votre état de santé général ?",
         "physhlth_prompt": "👉Combien de jours votre santé physique n'a-t-elle pas été bonne ?",
         "menthlth_prompt": "👉Combien de jours votre santé mentale n'a-t-elle pas été bonne ?",
-        "smoke_prompt": "👉Fumez-vous ?",
+        "smoke_prompt": "👉Avez-vous des antécédents au tagisme ?",
         "soumettre": "Soumettre",
         "result_positive":send_prompt_to_mistral(f"Je suis peut-être diabétique ou en proie au diabète. prodigue moi des conseils pour améliorer mon etat de santé. utilise ce format pour répondre: {format} en français"),
         # "result_positive": "Vous êtes susceptible d'être diabétique. Consultez un spécialiste.",
@@ -51,7 +51,7 @@ content = {
         "section1": "Section 1: General Information",
         "age_prompt": "👉Enter your age",
         "bmi_prompt": "👉Enter your BMI",
-        "chol_prompt": "Do you have high cholesterol?",
+        "chol_prompt": "👉Do you regularly consume fast food and street food?",
         "suivant": "Next",
         "section2": "Section 2: Lifestyle",
         "sexe_prompt": "👉What is your gender?",
@@ -63,7 +63,7 @@ content = {
         "genhlth_prompt": "👉How would you rate your overall health on a scale of 1 to 5?",
         "physhlth_prompt": "👉How many days has your physical health been poor?",
         "menthlth_prompt": "👉How many days has your mental health been poor?",
-        "smoke_prompt": "👉Do you smoke ?",
+        "smoke_prompt": "👉Do you have a history of tagism?",
         "soumettre": "Submit",
         "result_positive":send_prompt_to_mistral(f"Je suis peut-être diabétique ou en proie au diabète. prodigue moi des conseils pour améliorer mon etat de santé. utilise ce format pour répondre: {format}. fais-le en anglais "),
 
@@ -139,13 +139,24 @@ def main():
         with st.form("section1_form"):
             age_ = st.selectbox(selected_content["age_prompt"], list(age_mapping.keys()), index=None)
             age = age_mapping[age_] if age_ else ""
-            BMI = st.number_input(selected_content["bmi_prompt"], placeholder=selected_content["bmi_prompt"], key="cgh")
+            poids = st.number_input("Entrez votre poids (en kg)", min_value=0.0, format="%.2f")
+            taille = st.number_input("Entrez votre taille en mètre", min_value=0.0, format="%.2f")
+            
+            # Calcul de l'IMC
+            if taille > 0:
+                BMI = int(poids / (taille ** 2))  # Calculer l'IMC et l'arrondir à l'entier
+                print((f"Votre IMC est: {BMI}"))
+            else:
+                print("invalid height")
+
             chol = st.selectbox(selected_content["chol_prompt"], list(yes_or_no.keys()), index=None)
             HighChol = yes_or_no[chol] if chol else ""
+
             if st.form_submit_button(selected_content["suivant"]):
                 st.session_state.section = 2
                 st.rerun()
                 return
+
 
     # Section 2 : Habitudes de vie
     if st.session_state.section == 2:
@@ -205,7 +216,7 @@ def main():
                 features = [Highbp, HighChol, BMI, Smoke, Fruit, Genhlth, MentHlth, PhysHlth, Diff, Sexe, age]
                 print(features)
                 features = np.array(features).reshape(1, -1)
-                prediction = None
+                # prediction = None
                 with open('new_GradientBoostingClassifier_boost.pkl', 'rb') as best_gradient_boost:
                     modele_charge = pickle.load(best_gradient_boost)
                     prediction = modele_charge.predict(features)

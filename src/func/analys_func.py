@@ -98,9 +98,44 @@ def pearson_corr(df):
     plt.tight_layout()
     st.pyplot(plt.gcf())
     plt.close()
+    st.rerun()
     
     
 
+
+
+def afficher_camembert_prediction_par_age(csv_file):
+    import pandas as pd
+    import matplotlib.pyplot as plt
+    import streamlit as st
+    # Lecture des données depuis le fichier CSV
+    df = pd.read_csv(csv_file)
+
+    # S'assurer que les colonnes sont présentes
+    if 'Age' in df.columns and 'Prediction' in df.columns:
+        # Séparer les personnes diabétiques et non-diabétiques
+        diabetiques = df[df['Prediction'] == 1].shape[0]
+        non_diabetiques = df[df['Prediction'] == 0].shape[0]
+
+        # Création du camembert
+        labels = ['Diabétiques', 'Non-diabétiques']
+        sizes = [diabetiques, non_diabetiques]
+        colors = ['#ff9999', '#66b3ff']
+        explode = (0.1, 0)  # Pour mettre en valeur une partie
+
+        plt.figure(figsize=(8, 8))
+        plt.pie(sizes, explode=explode, labels=labels, colors=colors, autopct='%1.1f%%',
+                shadow=True, startangle=90)
+        plt.title("Proportion de diabétiques et non-diabétiques dans les données de prédiction")
+        plt.axis('equal')  # Assure que le camembert est bien circulaire
+
+        # Utilisation de st.pyplot() pour afficher dans Streamlit
+        st.pyplot(plt)
+    else:
+        st.error("Les colonnes 'Age' et 'Prediction' sont manquantes dans le fichier CSV.")
+
+# Utilisation de la fonction avec le fichier 'diabetes_forecast.csv'
+afficher_camembert_prediction_par_age('diabetes_forecast.csv')
 
 
 # ******************************************************plotly*****************************************************

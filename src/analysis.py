@@ -1,9 +1,10 @@
 
+from matplotlib import pyplot as plt
 import streamlit as st
 import pandas as pd
 import time
 import pyrebase
-from src.func.analys_func import importation_of_dataset, pearson_corr, visualize_single_correlation, histplot
+from src.func.analys_func import importation_of_dataset, pearson_corr, visualize_single_correlation, histplot, afficher_camembert_prediction_par_age
 
 firebaseConfig = {
     'apiKey': "AIzaSyB6h3v8I9oTFeohknaKYAtN85sRC3_SR7o",
@@ -234,6 +235,10 @@ def main():
 
     if not st.session_state.logged_in:
         st.info("👈Authentifiez vous pour accéder aux données")
+        csv_file = "diabetes_forecast.csv"
+        afficher_camembert_prediction_par_age(csv_file)
+        
+        
         st.sidebar.header("Authentification")
         display_login_signup()
     else:
@@ -241,6 +246,195 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
